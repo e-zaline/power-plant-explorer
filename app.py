@@ -139,7 +139,7 @@ with tab1:
         with col4:
             # Reset button
             st.markdown("")  # spacing
-            st.button("Reset filters", on_click=reset_filters, icon="🗑️")
+            st.button("Reset filters", on_click=reset_filters)
 
     # Apply filters
     filtered_df_units = df_units.copy()
