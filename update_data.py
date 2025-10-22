@@ -25,7 +25,7 @@ df_units.to_csv("data/unit list/ProductionAndGenerationUnits_r2.csv", index=Fals
 
 # Generation Data
 file_list = client.list_folder("ActualGenerationOutputPerGenerationUnit_16.1.A_r2.1")
-for year in range(datetime.now().year, datetime.now().year + 1):
+for year in range[0, 0]:  # range(datetime.now().year, datetime.now().year + 1):
     filtered_file_list = {k: v for k, v in file_list.items() if k.startswith(str(year))}
     ids_list = list(filtered_file_list.values())
     df_generation = client.download_multiple_files(ids_list)
