@@ -42,6 +42,11 @@ df_units = df_units[
 df_generation = load_data("data/generation/")
 
 
+# Initialize session state for selected units
+if "selected_units" not in st.session_state:
+    st.session_state["selected_units"] = []
+
+
 # Add a helper to reset filter widgets using session_state
 def reset_filters():
     st.session_state["search_term"] = ""
@@ -49,7 +54,6 @@ def reset_filters():
     st.session_state["selected_types"] = []
     st.session_state["selected_status"] = []
     st.session_state["show_selected_only"] = False
-    st.session_state["selected_units"] = []
 
 
 # Sidebar navigation
@@ -60,8 +64,15 @@ unit_codes = df_units["GenerationUnitCode"].dropna().unique()
 unit_codes = sorted(unit_codes)
 
 selected_units = st.sidebar.multiselect(
-    "Select your Generation Unit Codes", options=list(unit_codes)
+    "Select your Generation Unit Codes",
+    options=list(unit_codes),
+    default=st.session_state["selected_units"],
+    key="sidebar_multiselect",
 )
+
+# Update session state when sidebar selection changes
+if selected_units != st.session_state["selected_units"]:
+    st.session_state["selected_units"] = selected_units
 
 
 # Display selected unit info
@@ -76,7 +87,7 @@ if len(selected_units) > 0:
         )
     )
     selected_units_info_str = "\n \n ".join(
-        f"{k} ({v})" for k, v in selected_units_info.items()
+        f"{code} ({selected_units_info.get(code, 'N/A')})" for code in selected_units
     )
     st.sidebar.info(f"Selected: \n \n {selected_units_info_str} ")
 
@@ -130,7 +141,7 @@ with tab1:
             )
 
         col1, col2, col3, col4 = st.columns(4)
-        with col3:
+        with col1:
             # Show only selected unit
             show_selected_only = st.checkbox(
                 "Show only the units you have selected in the navigation panel",
@@ -145,8 +156,15 @@ with tab1:
 
     # Apply filters
     filtered_df_units = df_units.copy()
+
+    # Add Selected column based on session state
+    filtered_df_units["Selected"] = filtered_df_units["GenerationUnitCode"].isin(
+        st.session_state["selected_units"]
+    )
+
     filtered_df_units = filtered_df_units[
         [
+            "Selected",
             "AreaDisplayName",
             "GenerationUnitCode",
             "GenerationUnitName",
@@ -167,9 +185,7 @@ with tab1:
 
     # Filter by selected unit
     if show_selected_only:
-        filtered_df_units = filtered_df_units[
-            filtered_df_units["GenerationUnitCode"].isin(selected_units)
-        ]
+        filtered_df_units = filtered_df_units[filtered_df_units["Selected"] == True]
 
     # Filter by AreaDisplayName
     if selected_areas:
@@ -200,7 +216,27 @@ with tab1:
 
     # Display dataframe
     filtered_df_units = filtered_df_units.drop_duplicates().reset_index(drop=True)
-    st.dataframe(filtered_df_units, use_container_width=True, height=500)
+
+    # Use data_editor for interactive selection
+    edited_df = st.data_editor(
+        filtered_df_units,
+        column_config={
+            "Selected": st.column_config.CheckboxColumn(
+                default=False,
+            )
+        },
+        disabled=[col for col in filtered_df_units.columns if col != "Selected"],
+        hide_index=True,
+        use_container_width=True,
+        height=500,
+        key="unit_editor",
+    )
+
+    # Update session state based on checkbox changes
+    newly_selected = edited_df[edited_df["Selected"]]["GenerationUnitCode"].tolist()
+    if set(newly_selected) != set(st.session_state["selected_units"]):
+        st.session_state["selected_units"] = newly_selected
+        st.rerun()
 
     # Download button
     csv = filtered_df_units.to_csv(index=False).encode("utf-8")
