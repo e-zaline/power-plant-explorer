@@ -81,12 +81,14 @@ if len(selected_units) > 0:
     st.sidebar.info(f"Selected: \n \n {selected_units_info_str} ")
 
 st.sidebar.markdown("---")
-last_update = df_units["UpdateTime(UTC)"].max()
+last_update = df_generation["DateTime"].max() if df_generation is not None else "N/A"
 st.sidebar.markdown(f"**Data last updated:** {last_update}")
 
 
 # Main content - Tabs
-tab1, tab2 = st.tabs(["🔍 Find your Generation Unit", "📊 Explore generation"])
+tab1, tab2, tab3 = st.tabs(
+    ["🔍 Find your Generation Unit", "📊 Explore generation", "ℹ️ Read me"]
+)
 
 with tab1:
     st.header("Find your Generation Unit")
@@ -242,9 +244,8 @@ with tab2:
         )
     else:
         st.info("Please select at least one Generation Unit Code to see the data.")
-        st.stop()
 
-    if not filtered_generation.empty:
+    if len(selected_units) > 0 and not filtered_generation.empty:
         # Create a new column with the formatted legend label
         filtered_generation["Unit_Label"] = filtered_generation[
             "GenerationUnitCode"
@@ -285,5 +286,19 @@ with tab2:
             mime="text/csv",
         )
 
-    else:
+    elif len(selected_units) > 0 and filtered_generation.empty:
         st.warning("No generation data available for the selected units and years.")
+
+with tab3:
+    st.header("About this App")
+    st.markdown(
+        """
+
+This application allows you to explore generation units and their daily generation data from the [ENTSO-E Transparency Platform](https://transparency.entsoe.eu/).
+The data is uploaded daily from ENTSO-E using their API.
+
+**Note:** We do not own this data.
+
+Developed by **e-zaline** for **Beyond Fossil Fuels**.
+"""
+    )
