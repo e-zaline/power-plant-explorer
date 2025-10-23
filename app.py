@@ -46,6 +46,15 @@ df_generation = load_data("data/generation/")
 if "selected_units" not in st.session_state:
     st.session_state["selected_units"] = []
 
+# If the editor requested a sync, write the sidebar key BEFORE the widget is created
+if st.session_state.get("_sync_from_editor", False):
+    st.session_state["sidebar_multiselect"] = st.session_state["selected_units"]
+    st.session_state["_sync_from_editor"] = False
+
+# Ensure the sidebar widget key exists so multiselect uses it as its initial value
+if "sidebar_multiselect" not in st.session_state:
+    st.session_state["sidebar_multiselect"] = st.session_state["selected_units"]
+
 
 # Add a helper to reset filter widgets using session_state
 def reset_filters():
@@ -235,9 +244,9 @@ with tab1:
     newly_selected = edited_df[edited_df["Selected"]]["GenerationUnitCode"].tolist()
     if set(newly_selected) != set(st.session_state["selected_units"]):
         st.session_state["selected_units"] = newly_selected
-        st.session_state["sidebar_multiselect"] = newly_selected
-        # trigger a rerun so the sidebar multiselect updates immediately
-        st.experimental_rerun()
+        # ask the next run to sync the sidebar widget BEFORE its instantiation
+        st.session_state["_sync_from_editor"] = True
+        st.rerun()
 
     # Download button
     csv = filtered_df_units.to_csv(index=False).encode("utf-8")
