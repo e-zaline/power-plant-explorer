@@ -216,7 +216,6 @@ with tab1:
     edited_df = st.data_editor(
         filtered_df_units,
         hide_index=True,
-        use_container_width=True,
         key="unit_editor",
         on_change=sync_selection,
         disabled=[col for col in filtered_df_units.columns if col != "Selected"],
