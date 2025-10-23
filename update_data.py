@@ -22,6 +22,7 @@ df_units = client.download_single_file(
 )
 # Create the directory if it doesn't exist
 os.makedirs("data/unit list", exist_ok=True)
+print("Created directory, now exists:", os.path.exists("data/unit list"))
 df_units.to_csv("data/unit list/ProductionAndGenerationUnits_r2.csv", index=False)
 
 # Generation Data
