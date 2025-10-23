@@ -1,0 +1,7 @@
+ValidFrom,ValidTo,ProductionUnitCode,ProductionUnitName,ProductionUnitStatus,ProductionUnitType,ProductionUnitLocation,ProductionUnitInstalledCapacity(MW),ProductionUnitVoltage(kV),AreaCode,AreaDisplayName,AreaTypeCode,MapCode,GenerationUnitCode,GenerationUnitName,GenerationUnitStatus,GenerationUnitType,GenerationUnitLocation,GenerationUnitInstalledCapacity(MW),UpdateTime(UTC)
+,,,,,,,,,,,,,49W000000000028Y,Prinses Alexia Windpark,CANCELLED,Wind Onshore,intra_zonal,122,
+,,,,,,,,,,,,,11WD2LIDT000036R,DT,COMMISSIONED,Fossil Gas,intra_zonal,90,
+,,,,,,,,,,,,,11WD2LIG10000346,GT1,COMMISSIONED,Fossil Gas,intra_zonal,75,
+,,,,,,,,,,,,,11WD2LIG3000035P,GT3,COMMISSIONED,Fossil Gas,intra_zonal,65,
+,,,,,,,,,,,,,50WG00000001476O,Sima G1 Hydro,COMMISSIONED,Hydro Water Reservoir,Sima,310,
+,,,,,,,,,,,,,50WG00000001474S,Sima G2 Hydro,COMMISSIONED,Hydro Water Reservoir,Sima,310,
