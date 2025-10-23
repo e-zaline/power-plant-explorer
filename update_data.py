@@ -20,7 +20,8 @@ file_list = client.list_folder("ProductionAndGenerationUnits_r2")
 df_units = client.download_single_file(
     folder="ProductionAndGenerationUnits_r2", filename=list(file_list.keys())[0]
 )
-
+# Create the directory if it doesn't exist
+os.makedirs("data/unit list", exist_ok=True)
 df_units.to_csv("data/unit list/ProductionAndGenerationUnits_r2.csv", index=False)
 
 # Generation Data
@@ -49,6 +50,8 @@ for year in range(0, 0):  # range(datetime.now().year, datetime.now().year + 1):
         .reset_index()
     )
 
+    # Create the directory if it doesn't exist
+    os.makedirs("data/generation", exist_ok=True)
     result.to_csv(
         f"data/generation/all_units_daily_generation_{str(year)}.csv", index=False
     )
