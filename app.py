@@ -66,7 +66,7 @@ unit_codes = sorted(unit_codes)
 selected_units = st.sidebar.multiselect(
     "Select your Generation Unit Codes",
     options=list(unit_codes),
-    value=st.session_state["selected_units"],
+    default=st.session_state["selected_units"],
     key="sidebar_multiselect",
 )
 
