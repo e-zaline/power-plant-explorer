@@ -227,7 +227,6 @@ with tab1:
         },
         disabled=[col for col in filtered_df_units.columns if col != "Selected"],
         hide_index=True,
-        use_container_width=True,
         height=500,
         key="unit_editor",
     )
@@ -294,7 +293,7 @@ with tab2:
         )
 
         # Display dataframe
-        # st.dataframe(filtered_generation, use_container_width=True, height=500)
+        # st.dataframe(filtered_generation, width='stretch', height=500)
 
         # Plot
         fig = px.line(
@@ -311,7 +310,7 @@ with tab2:
 
         fig.update_layout(legend=dict(yanchor="top", y=-0.2, xanchor="left", x=0.01))
 
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig)
 
         # Download button
         csv = filtered_generation.to_csv(index=False).encode("utf-8")
