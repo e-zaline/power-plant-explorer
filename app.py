@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # Title
-st.title("⚡ ENTSO-E Transparency Platform Generation Unit Explorer")
+st.title("⚡ ENTSO-E Transparency Generation Unit Explorer")
 
 
 # Load data
@@ -42,20 +42,6 @@ df_units = df_units[
 df_generation = load_data("data/generation/")
 
 
-# Initialize session state for selected units
-if "selected_units" not in st.session_state:
-    st.session_state["selected_units"] = []
-
-# If the editor requested a sync, write the sidebar key BEFORE the widget is created
-if st.session_state.get("_sync_from_editor", False):
-    st.session_state["sidebar_multiselect"] = st.session_state["selected_units"]
-    st.session_state["_sync_from_editor"] = False
-
-# Ensure the sidebar widget key exists so multiselect uses it as its initial value
-if "sidebar_multiselect" not in st.session_state:
-    st.session_state["sidebar_multiselect"] = st.session_state["selected_units"]
-
-
 # Add a helper to reset filter widgets using session_state
 def reset_filters():
     st.session_state["search_term"] = ""
@@ -65,57 +51,41 @@ def reset_filters():
     st.session_state["show_selected_only"] = False
 
 
-# Sidebar navigation
-st.sidebar.header("Generation Units")
+# Callback to sync selection changes
+def sync_selection():
+    if "unit_editor" in st.session_state:
+        edited_df = st.session_state["unit_editor"]["edited_rows"]
 
-# Get unique generation unit codes, handling NaN values
-unit_codes = df_units["GenerationUnitCode"].dropna().unique()
-unit_codes = sorted(unit_codes)
+        # Get the current filtered dataframe to know which rows correspond to which units
+        for idx, changes in edited_df.items():
+            if "Selected" in changes:
+                # Get the GenerationUnitCode for this row
+                unit_code = filtered_df_units.iloc[idx]["GenerationUnitCode"]
 
-selected_units = st.sidebar.multiselect(
-    "Select your Generation Unit Codes",
-    options=list(unit_codes),
-    default=st.session_state["selected_units"],
-    key="sidebar_multiselect",
-)
-
-# Update session state when sidebar selection changes
-if selected_units != st.session_state["selected_units"]:
-    st.session_state["selected_units"] = selected_units
+                if changes["Selected"]:
+                    # Add to selected units if not already there
+                    if unit_code not in st.session_state["selected_units"]:
+                        st.session_state["selected_units"].append(unit_code)
+                else:
+                    # Remove from selected units
+                    if unit_code in st.session_state["selected_units"]:
+                        st.session_state["selected_units"].remove(unit_code)
 
 
-# Display selected unit info
-if len(selected_units) > 0:
-    selected_units_info = df_units[df_units["GenerationUnitCode"].isin(selected_units)][
-        ["GenerationUnitCode", "GenerationUnitName"]
-    ]
-    selected_units_info = dict(
-        zip(
-            selected_units_info["GenerationUnitCode"],
-            selected_units_info["GenerationUnitName"],
-        )
-    )
-    selected_units_info_str = "\n \n ".join(
-        f"{code} ({selected_units_info.get(code, 'N/A')})" for code in selected_units
-    )
-    st.sidebar.info(f"Selected: \n \n {selected_units_info_str} ")
-
-st.sidebar.markdown("---")
-last_update = df_generation["DateTime"].max() if df_generation is not None else "N/A"
-st.sidebar.markdown(f"**Data last updated:** {last_update}")
-
+if "selected_units" not in st.session_state:
+    st.session_state["selected_units"] = []
 
 # Main content - Tabs
 tab1, tab2, tab3 = st.tabs(
-    ["🔍 Find your Generation Unit", "📊 Explore generation", "ℹ️ Read me"]
+    ["🔍 Select your generation unit(s)", "📊 Explore generation", "ℹ️ Read me"]
 )
 
 with tab1:
-    st.header("Find your Generation Unit")
-    st.markdown("Explore and filter the generation units database")
+    st.header("Select your generation unit(s)")
+    st.markdown("Explore, filter and select your generation units")
 
     # Filter section
-    with st.expander("🔧 Filters", expanded=True):
+    with st.expander("Filters", expanded=True):
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
@@ -149,31 +119,31 @@ with tab1:
                 "GenerationUnitStatus", options=list(unit_status), key="selected_status"
             )
 
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3 = st.columns(3)
         with col1:
             # Show only selected unit
             show_selected_only = st.checkbox(
-                "Show only the units you have selected in the navigation panel",
+                "Show only the selected units",
                 value=False,
                 key="show_selected_only",
             )
 
-        with col4:
+        with col2:
             # Reset button
-            st.markdown("")  # spacing
             st.button("Reset filters", on_click=reset_filters)
+
+        with col3:
+            # Unselect all button
+            st.button(
+                "Unselect all",
+                on_click=lambda: st.session_state["selected_units"].clear(),
+            )
 
     # Apply filters
     filtered_df_units = df_units.copy()
 
-    # Add Selected column based on session state
-    filtered_df_units["Selected"] = filtered_df_units["GenerationUnitCode"].isin(
-        st.session_state["selected_units"]
-    )
-
     filtered_df_units = filtered_df_units[
         [
-            "Selected",
             "AreaDisplayName",
             "GenerationUnitCode",
             "GenerationUnitName",
@@ -194,7 +164,11 @@ with tab1:
 
     # Filter by selected unit
     if show_selected_only:
-        filtered_df_units = filtered_df_units[filtered_df_units["Selected"] == True]
+        filtered_df_units = filtered_df_units[
+            filtered_df_units["GenerationUnitCode"].isin(
+                st.session_state["selected_units"]
+            )
+        ]
 
     # Filter by AreaDisplayName
     if selected_areas:
@@ -223,30 +197,30 @@ with tab1:
         )
         filtered_df_units = filtered_df_units[mask]
 
+    # Add Selected column based on current session state
+    filtered_df_units.insert(
+        0,
+        "Selected",
+        filtered_df_units["GenerationUnitCode"].isin(
+            st.session_state["selected_units"]
+        ),
+    )
+
     # Display dataframe
     filtered_df_units = filtered_df_units.drop_duplicates().reset_index(drop=True)
 
-    # Use data_editor for interactive selection
+    # Display current selection count
+    st.info(f"📌 Currently selected: {len(st.session_state['selected_units'])} unit(s)")
+
+    # Use data_editor for interactive selection with callback
     edited_df = st.data_editor(
         filtered_df_units,
-        column_config={
-            "Selected": st.column_config.CheckboxColumn(
-                default=False,
-            )
-        },
-        disabled=[col for col in filtered_df_units.columns if col != "Selected"],
         hide_index=True,
-        height=500,
+        use_container_width=True,
         key="unit_editor",
+        on_change=sync_selection,
+        disabled=[col for col in filtered_df_units.columns if col != "Selected"],
     )
-
-    # Update session state based on checkbox changes
-    newly_selected = edited_df[edited_df["Selected"]]["GenerationUnitCode"].tolist()
-    if set(newly_selected) != set(st.session_state["selected_units"]):
-        st.session_state["selected_units"] = newly_selected
-        # ask the next run to sync the sidebar widget BEFORE its instantiation
-        st.session_state["_sync_from_editor"] = True
-        st.rerun()
 
     # Download button
     csv = filtered_df_units.to_csv(index=False).encode("utf-8")
@@ -258,15 +232,24 @@ with tab1:
     )
 
 with tab2:
+    selected_units = st.session_state["selected_units"]
     st.header("Explore generation")
     col1, col2, col3 = st.columns(3)
     with col1:
         filtered_years = st.slider(
-            "Select year",
+            "Select year range",
             min_value=2014,
             max_value=datetime.now().year,
             value=(datetime.now().year - 1, datetime.now().year),
         )
+
+    generation_units_name = (
+        df_units.drop_duplicates(subset="GenerationUnitCode", keep="first")[
+            ["GenerationUnitCode", "GenerationUnitName"]
+        ]
+        .set_index("GenerationUnitCode")["GenerationUnitName"]
+        .to_dict()
+    )
 
     filtered_generation = (
         df_generation[["DateTime", "GenerationUnitCode", "Generation_MWh"]]
@@ -289,22 +272,16 @@ with tab2:
             .reset_index()
         )
     else:
-        st.info("Please select at least one Generation Unit Code to see the data.")
+        st.info("Select at least one generation unit to see the data.")
 
     if len(selected_units) > 0 and not filtered_generation.empty:
         # Create a new column with the formatted legend label
-        filtered_generation["Unit_Label"] = filtered_generation[
-            "GenerationUnitCode"
-        ].map(
-            lambda code: (
-                f"{code} ({selected_units_info[code]})"
-                if code in selected_units_info
-                else code
-            )
+        filtered_generation["Unit_Label"] = (
+            filtered_generation["GenerationUnitCode"].map(generation_units_name)
+            + " ("
+            + filtered_generation["GenerationUnitCode"]
+            + ")"
         )
-
-        # Display dataframe
-        # st.dataframe(filtered_generation, width='stretch', height=500)
 
         # Plot
         fig = px.line(
@@ -314,7 +291,7 @@ with tab2:
             color="Unit_Label",
             labels={
                 "DateTime": "DateTime",
-                "Generation_MWh": "Generation (MWh)",
+                "Generation_MWh": "Daily generation (MWh)",
                 "GenerationUnitCode": "Generation Unit",
             },
         )
@@ -348,3 +325,8 @@ The data is uploaded daily from ENTSO-E using their API.
 Developed by **e-zaline** for **Beyond Fossil Fuels**.
 """
     )
+
+    last_update = (
+        df_generation["DateTime"].max() if df_generation is not None else "N/A"
+    )
+    st.markdown(f"**Data last updated:** {last_update}")

@@ -22,7 +22,6 @@ df_units = client.download_single_file(
 )
 # Create the directory if it doesn't exist
 os.makedirs("data/unit list", exist_ok=True)
-print("Created directory, now exists:", os.path.exists("data/unit list"))
 df_units.to_csv("data/unit list/ProductionAndGenerationUnits_r2.csv", index=False)
 
 # Generation Data
@@ -44,7 +43,13 @@ for year in range(datetime.now().year, datetime.now().year + 1):
 
     result = (
         df_generation.groupby(
-            ["DateTime", "GenerationUnitCode", "AreaDisplayName", "GenerationUnitType"],
+            [
+                "DateTime",
+                "GenerationUnitCode",
+                "GenerationUnitName",
+                "AreaDisplayName",
+                "GenerationUnitType",
+            ],
             observed=False,
         )["Generation_MWh"]
         .sum()
