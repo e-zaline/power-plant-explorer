@@ -1,4 +1,4 @@
-from entsoe import EntsoeFileClient
+from entsoe.files import EntsoeFileClient
 import pandas as pd
 from datetime import datetime
 import os
