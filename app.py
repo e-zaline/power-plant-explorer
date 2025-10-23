@@ -66,7 +66,7 @@ unit_codes = sorted(unit_codes)
 selected_units = st.sidebar.multiselect(
     "Select your Generation Unit Codes",
     options=list(unit_codes),
-    default=st.session_state["selected_units"],
+    value=st.session_state["selected_units"],
     key="sidebar_multiselect",
 )
 
@@ -235,7 +235,8 @@ with tab1:
     newly_selected = edited_df[edited_df["Selected"]]["GenerationUnitCode"].tolist()
     if set(newly_selected) != set(st.session_state["selected_units"]):
         st.session_state["selected_units"] = newly_selected
-        st.rerun()
+        # sync the sidebar widget so UI reflects the change without forcing an immediate rerun
+        st.session_state["sidebar_multiselect"] = newly_selected
 
     # Download button
     csv = filtered_df_units.to_csv(index=False).encode("utf-8")
