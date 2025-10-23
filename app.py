@@ -235,8 +235,9 @@ with tab1:
     newly_selected = edited_df[edited_df["Selected"]]["GenerationUnitCode"].tolist()
     if set(newly_selected) != set(st.session_state["selected_units"]):
         st.session_state["selected_units"] = newly_selected
-        # sync the sidebar widget so UI reflects the change without forcing an immediate rerun
         st.session_state["sidebar_multiselect"] = newly_selected
+        # trigger a rerun so the sidebar multiselect updates immediately
+        st.experimental_rerun()
 
     # Download button
     csv = filtered_df_units.to_csv(index=False).encode("utf-8")
