@@ -6,8 +6,6 @@ on:
     - cron: '0 4 * * *'
   workflow_dispatch:  # Allows manual trigger from GitHub UI
 
-  permissions:
-    contents: write
 
 jobs:
   update-data:
