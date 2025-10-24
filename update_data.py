@@ -36,7 +36,9 @@ for year in range(datetime.now().year, datetime.now().year + 1):
         lambda x: 0.25 if x == "PT15M" else (0.5 if x == "PT30M" else 1)
     )
     df_generation["Generation_MWh"] = (
-        df_generation["ActualGenerationOutput(MW)"] * df_generation["Hour"]
+        (df_generation["ActualGenerationOutput(MW)"] * df_generation["Hour"])
+        .fillna(0)
+        .astype("int32")
     )
     df_generation["DateTime"] = pd.to_datetime(df_generation["DateTime (UTC)"])
     df_generation["DateTime"] = df_generation["DateTime"].dt.strftime("%Y-%m-%d")
@@ -46,9 +48,6 @@ for year in range(datetime.now().year, datetime.now().year + 1):
             [
                 "DateTime",
                 "GenerationUnitCode",
-                "GenerationUnitName",
-                "AreaDisplayName",
-                "GenerationUnitType",
             ],
             observed=False,
         )["Generation_MWh"]
@@ -58,6 +57,6 @@ for year in range(datetime.now().year, datetime.now().year + 1):
 
     # Create the directory if it doesn't exist
     os.makedirs("data/generation", exist_ok=True)
-    result.to_csv(
-        f"data/generation/all_units_daily_generation_{str(year)}.csv", index=False
+    result.to_parquet(
+        f"data/generation/all_units_daily_generation_{str(year)}.parquet", index=False
     )

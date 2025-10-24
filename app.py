@@ -16,30 +16,56 @@ st.title("⚡ ENTSO-E Transparency Generation Unit Explorer")
 
 # Load data
 @st.cache_data
-def load_data(folder, delimiter=","):
-    try:
-        csv_files = glob.glob(os.path.join(folder, "*.csv"))
-        if not csv_files:
-            st.error(f"No CSV files found in {folder}")
-            return None
-        df = pd.concat(
-            [pd.read_csv(f, encoding="utf-8", delimiter=delimiter) for f in csv_files],
-            ignore_index=True,
+def load_csv_data(folder, delimiter=",", dtypes=None, parse_dates=None, usecols=None):
+    csv_files = glob.glob(os.path.join(folder, "*.csv"))
+    if not csv_files:
+        raise FileNotFoundError(f"No CSV files found in {folder}")
+    dfs = []
+    for f in csv_files:
+        df = pd.read_csv(
+            f,
+            encoding="utf-8",
+            delimiter=delimiter,
+            dtype=dtypes,
+            parse_dates=parse_dates,
+            usecols=usecols,
+            low_memory=False,
         )
-        return df
-    except FileNotFoundError:
-        st.error(f"Error: folder '{folder}' not found")
-        return None
+        dfs.append(df)
+    return pd.concat(dfs, ignore_index=True)
+
+
+@st.cache_data
+def load_parquet_data(folder):
+    parquet_files = glob.glob(os.path.join(folder, "*.parquet"))
+    if not parquet_files:
+        raise FileNotFoundError(f"No Parquet files found in {folder}")
+    dfs = []
+    for f in parquet_files:
+        df = pd.read_parquet(f)
+        dfs.append(df)
+    return pd.concat(dfs, ignore_index=True)
 
 
 # Load units list
-df_units = load_data("data/unit list/")
+cols_to_load = [
+    "AreaDisplayName",
+    "GenerationUnitCode",
+    "GenerationUnitName",
+    "GenerationUnitType",
+    "GenerationUnitStatus",
+    "GenerationUnitInstalledCapacity(MW)",
+    "ProductionUnitCode",
+    "ProductionUnitName",
+    "UpdateTime(UTC)",
+]
+df_units = load_csv_data("data/unit list/", usecols=cols_to_load)
 df_units = df_units[
     df_units["GenerationUnitCode"].notna() & df_units["AreaDisplayName"].notna()
 ].reset_index()
 
 # Load generation data
-df_generation = load_data("data/generation/")
+df_generation = load_parquet_data("data/generation/")
 
 
 # Add a helper to reset filter widgets using session_state
@@ -141,20 +167,6 @@ with tab1:
 
     # Apply filters
     filtered_df_units = df_units.copy()
-
-    filtered_df_units = filtered_df_units[
-        [
-            "AreaDisplayName",
-            "GenerationUnitCode",
-            "GenerationUnitName",
-            "GenerationUnitType",
-            "GenerationUnitStatus",
-            "GenerationUnitInstalledCapacity(MW)",
-            "ProductionUnitCode",
-            "ProductionUnitName",
-            "UpdateTime(UTC)",
-        ]
-    ]
 
     filtered_df_units = (
         filtered_df_units.sort_values("UpdateTime(UTC)")
