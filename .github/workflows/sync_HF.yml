@@ -18,4 +18,4 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: uvx hf upload e-zaline/power-plant-tracker --repo-type=space --token=$HF_TOKEN
+        run: uvx hf upload e-zaline/power-plant-tracker . --repo-type=space --token=$HF_TOKEN
