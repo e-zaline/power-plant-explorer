@@ -10,12 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          lfs: true
       - name: Install uv
         uses: astral-sh/setup-uv@v6
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: uvx hf upload e-zaline/power-plant-tracker . --repo-type=space --token=$HF_TOKEN
+        run: uvx hf upload e-zaline/power-plant-tracker . --repo-type=space --token=$HF_TOKEN --delete *
