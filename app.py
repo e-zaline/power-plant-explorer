@@ -108,7 +108,9 @@ tab1, tab2, tab3 = st.tabs(
 
 with tab1:
     st.header("Select your generation unit(s)")
-    st.markdown("Explore, filter and select your generation units")
+    st.markdown(
+        "Explore, filter and select your generation units by ticking the checkboxes. When you're ready, go to the 'Explore generation' tab to visualize the data."
+    )
 
     # Filter section
     with st.expander("Filters", expanded=True):
@@ -222,7 +224,15 @@ with tab1:
     filtered_df_units = filtered_df_units.drop_duplicates().reset_index(drop=True)
 
     # Display current selection count
-    st.info(f"📌 Currently selected: {len(st.session_state['selected_units'])} unit(s)")
+    if len(st.session_state["selected_units"]) == 0:
+        select_message = "Select at least one unit to visualise its generation."
+    elif len(st.session_state["selected_units"]) > 0:
+        select_message = (
+            "Go to the 'Explore generation' tab to visualize the generation."
+        )
+    st.info(
+        f"📌 Currently selected: {len(st.session_state['selected_units'])} unit(s). \n{select_message}"
+    )
 
     # Use data_editor for interactive selection with callback
     edited_df = st.data_editor(
