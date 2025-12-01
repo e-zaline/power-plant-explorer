@@ -1,9 +1,12 @@
 name: Sync to Hugging Face hub
+
 on:
-  push:
-    branches: [main]
-  # to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["Update Data Daily"]
+    types:
+      - completed
+  workflow_dispatch:  # keep manual trigger
+    # Allows manual trigger from GitHub UI
 
 permissions:
   contents: write
@@ -11,6 +14,8 @@ permissions:
 
 jobs:
   sync-to-hub:
+    # only run when the triggering workflow completed successfully
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,4 +24,4 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: uvx hf upload e-zaline/power-plant-tracker . --repo-type=space --token=$HF_TOKEN --delete="*"
+        run: uvx hf upload e-zaline/power-plant-tracker . --repo-type=space --token=$HF_TOKEN
