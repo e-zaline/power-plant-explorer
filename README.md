@@ -1,3 +1,12 @@
+---
+title: Power Plant Tracker
+emoji: ⚡
+colorFrom: yellow
+colorTo: green
+sdk: streamlit
+pinned: false
+---
+
 # Power Plant Tracker
 
 This application allows you to explore **generation units** and their **daily electricity generation**  from the ENTSO-E Transparency Platform. The data is updated daily.
