@@ -15,10 +15,10 @@ client = EntsoeFileClient(username=username, pwd=password)
 # this returns a dict of {filename: unique_id}:
 
 # Production and Generation Units
-file_list = client.list_folder("ProductionAndGenerationUnits_r2")
+file_list = client.list_folder("ProductionAndGenerationUnits_r3")
 
 df_units = client.download_single_file(
-    folder="ProductionAndGenerationUnits_r2", filename=list(file_list.keys())[0]
+    folder="ProductionAndGenerationUnits_r3", filename=list(file_list.keys())[0]
 )
 # Create the directory if it doesn't exist
 os.makedirs("data/unit list", exist_ok=True)
