@@ -22,7 +22,7 @@ df_units = client.download_single_file(
 )
 # Create the directory if it doesn't exist
 os.makedirs("data/unit list", exist_ok=True)
-df_units.to_csv("data/unit list/ProductionAndGenerationUnits_r2.csv", index=False)
+df_units.to_csv("data/unit list/ProductionAndGenerationUnits_r3.csv", index=False)
 
 # Generation Data
 file_list = client.list_folder("ActualGenerationOutputPerGenerationUnit_16.1.A_r3")
@@ -40,6 +40,9 @@ for year in range(datetime.now().year, datetime.now().year + 1):
         .fillna(0)
         .astype("int32")
     )
+    df_generation = df_generation[
+        ["DateTime(UTC)", "GenerationUnitCode", "Generation_MWh"]
+    ].drop_duplicates()  # Some units appear in multiple bidding zones, we keep only one occurrence
     df_generation["DateTime"] = pd.to_datetime(df_generation["DateTime(UTC)"])
     df_generation["DateTime"] = df_generation["DateTime"].dt.strftime("%Y-%m-%d")
 
