@@ -57,12 +57,23 @@ cols_to_load = [
     "GenerationUnitInstalledCapacity(MW)",
     "ProductionUnitCode",
     "ProductionUnitName",
-    "UpdateTime(UTC)",
+    "ValidFrom",
 ]
 df_units = load_csv_data("data/unit list/", usecols=cols_to_load)
 df_units = df_units[
     df_units["GenerationUnitCode"].notna() & df_units["AreaDisplayName"].notna()
-].reset_index()
+].reset_index(drop=True)
+
+# Convert ValidFrom to datetime
+df_units["ValidFrom"] = pd.to_datetime(df_units["ValidFrom"], errors="coerce")
+
+# Keep only the entry with the most recent ValidFrom
+df_units = (
+    df_units.sort_values("ValidFrom").groupby("GenerationUnitCode").tail(1)
+).reset_index(drop=True)
+
+# Drop ValidFrom column as it's no longer needed
+df_units = df_units.drop(columns=["ValidFrom"])
 
 # Load generation data
 df_generation = load_parquet_data("data/generation/")
@@ -169,12 +180,6 @@ with tab1:
 
     # Apply filters
     filtered_df_units = df_units.copy()
-
-    filtered_df_units = (
-        filtered_df_units.sort_values("UpdateTime(UTC)")
-        .groupby("GenerationUnitCode")
-        .tail(1)
-    ).reset_index(drop=True)
 
     # Filter by selected unit
     if show_selected_only:
