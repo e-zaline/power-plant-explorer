@@ -4,14 +4,13 @@ import plotly.express as px
 from datetime import datetime
 import glob
 import os
+from formatting import *
 
 # Page configuration
-st.set_page_config(
-    page_title="ENTSO-E Generation Unit Explorer", page_icon="⚡", layout="wide"
-)
+st.set_page_config(page_title="Power plants explorer", page_icon="⚡", layout="wide")
 
 # Title
-st.title("⚡ ENTSO-E Transparency Generation Unit Explorer")
+st.title("⚡ Power plant generation explorer")
 
 
 # Load data
@@ -47,36 +46,33 @@ def load_parquet_data(folder):
     return pd.concat(dfs, ignore_index=True)
 
 
-# Load units list
-cols_to_load = [
-    "AreaDisplayName",
-    "GenerationUnitCode",
-    "GenerationUnitName",
-    "GenerationUnitType",
-    "GenerationUnitStatus",
-    "GenerationUnitInstalledCapacity(MW)",
-    "ProductionUnitCode",
-    "ProductionUnitName",
-    "ValidFrom",
-]
-df_units = load_csv_data("data/unit list/", usecols=cols_to_load)
-df_units = df_units[
-    df_units["GenerationUnitCode"].notna() & df_units["AreaDisplayName"].notna()
-].reset_index(drop=True)
+# Load ENTSO-E units list
+df_units_entsoe = load_csv_data("data/unit list/entsoe")
+df_units_entsoe = format_entsoe_units(df_units_entsoe)
 
-# Convert ValidFrom to datetime
-df_units["ValidFrom"] = pd.to_datetime(df_units["ValidFrom"], errors="coerce")
+# Load Elexon units list
+df_units_elexon = load_csv_data("data/unit list/elexon")
+df_units_elexon = format_elexon_units(df_units_elexon)
 
-# Keep only the entry with the most recent ValidFrom
-df_units = (
-    df_units.sort_values("ValidFrom").groupby("GenerationUnitCode").tail(1)
+# Concatenate ENTSO-E and Elexon units
+df_units = pd.concat([df_units_entsoe, df_units_elexon], ignore_index=True)
+# Sort units by Area, Fuel, Fuel detailled, Generation Unit Name
+df_units = df_units.sort_values(
+    by=["Area", "Fuel", "Fuel (detailled)", "Generation Unit Name"]
 ).reset_index(drop=True)
 
-# Drop ValidFrom column as it's no longer needed
-df_units = df_units.drop(columns=["ValidFrom"])
+# Load ENTSO-E generation data
+df_generation_entsoe = load_parquet_data("data/generation/entsoe/")
+df_generation_entsoe = format_entsoe_generation(df_generation_entsoe)
 
-# Load generation data
-df_generation = load_parquet_data("data/generation/")
+# Load Elexon generation data
+df_generation_elexon = load_parquet_data("data/generation/elexon/")
+df_generation_elexon = format_elexon_generation(df_generation_elexon)
+
+# Concatenate ENTSO-E and Elexon generation data
+df_generation = pd.concat(
+    [df_generation_entsoe, df_generation_elexon], ignore_index=True
+)
 
 
 # Add a helper to reset filter widgets using session_state
@@ -96,8 +92,8 @@ def sync_selection():
         # Get the current filtered dataframe to know which rows correspond to which units
         for idx, changes in edited_df.items():
             if "Selected" in changes:
-                # Get the GenerationUnitCode for this row
-                unit_code = filtered_df_units.iloc[idx]["GenerationUnitCode"]
+                # Get the ID for this row
+                unit_code = filtered_df_units.iloc[idx]["ID"]
 
                 if changes["Selected"]:
                     # Add to selected units if not already there
@@ -132,30 +128,30 @@ with tab1:
             search_term = st.text_input("Search (any column)", "", key="search_term")
 
         with col2:
-            # AreaDisplayName filter
+            # Area filter
             areas = []
             if df_units is not None:
-                areas = sorted(df_units["AreaDisplayName"].dropna().unique())
+                areas = sorted(df_units["Area"].dropna().unique())
             selected_areas = st.multiselect(
-                "AreaDisplayName", options=list(areas), key="selected_areas"
+                "Area", options=list(areas), key="selected_areas"
             )
 
         with col3:
-            # GenerationUnitType filter
+            # Fuel filter
             unit_types = []
             if df_units is not None:
-                unit_types = sorted(df_units["GenerationUnitType"].dropna().unique())
+                unit_types = sorted(df_units["Fuel"].dropna().unique())
             selected_types = st.multiselect(
-                "GenerationUnitType", options=list(unit_types), key="selected_types"
+                "Fuel", options=list(unit_types), key="selected_types"
             )
 
         with col4:
-            # GenerationUnitStatus filter
+            # Status filter
             unit_status = []
             if df_units is not None:
-                unit_status = sorted(df_units["GenerationUnitStatus"].dropna().unique())
+                unit_status = sorted(df_units["Status"].dropna().unique())
             selected_status = st.multiselect(
-                "GenerationUnitStatus", options=list(unit_status), key="selected_status"
+                "Status", options=list(unit_status), key="selected_status"
             )
 
         col1, col2, col3 = st.columns(3)
@@ -184,27 +180,25 @@ with tab1:
     # Filter by selected unit
     if show_selected_only:
         filtered_df_units = filtered_df_units[
-            filtered_df_units["GenerationUnitCode"].isin(
-                st.session_state["selected_units"]
-            )
+            filtered_df_units["ID"].isin(st.session_state["selected_units"])
         ]
 
-    # Filter by AreaDisplayName
+    # Filter by Area
     if selected_areas:
         filtered_df_units = filtered_df_units[
-            filtered_df_units["AreaDisplayName"].isin(selected_areas)
+            filtered_df_units["Area"].isin(selected_areas)
         ]
 
-    # Filter by GenerationUnitType
+    # Filter by Fuel
     if selected_types:
         filtered_df_units = filtered_df_units[
-            filtered_df_units["GenerationUnitType"].isin(selected_types)
+            filtered_df_units["Fuel"].isin(selected_types)
         ]
 
-    # Filter by GenerationUnitStatus
+    # Filter by Status
     if selected_status:
         filtered_df_units = filtered_df_units[
-            filtered_df_units["GenerationUnitStatus"].isin(selected_status)
+            filtered_df_units["Status"].isin(selected_status)
         ]
 
     # Apply text search
@@ -220,9 +214,7 @@ with tab1:
     filtered_df_units.insert(
         0,
         "Selected",
-        filtered_df_units["GenerationUnitCode"].isin(
-            st.session_state["selected_units"]
-        ),
+        filtered_df_units["ID"].isin(st.session_state["selected_units"]),
     )
 
     # Display dataframe
@@ -270,22 +262,20 @@ with tab2:
         )
 
     generation_units_name = (
-        df_units.drop_duplicates(subset="GenerationUnitCode", keep="first")[
-            ["GenerationUnitCode", "GenerationUnitName"]
+        df_units.drop_duplicates(subset="ID", keep="first")[
+            ["ID", "Generation Unit Name"]
         ]
-        .set_index("GenerationUnitCode")["GenerationUnitName"]
+        .set_index("ID")["Generation Unit Name"]
         .to_dict()
     )
 
     filtered_generation = (
-        df_generation[["DateTime", "GenerationUnitCode", "Generation_MWh"]]
-        .drop_duplicates()
-        .copy()
+        df_generation[["DateTime", "ID", "Generation_MWh"]].drop_duplicates().copy()
     )
 
     if len(selected_units) > 0:
         filtered_generation = filtered_generation[
-            filtered_generation["GenerationUnitCode"].isin(selected_units)
+            filtered_generation["ID"].isin(selected_units)
         ]
         filtered_generation = filtered_generation[
             filtered_generation["DateTime"].between(
@@ -293,9 +283,7 @@ with tab2:
             )
         ]
         filtered_generation = (
-            filtered_generation.groupby(["DateTime", "GenerationUnitCode"])
-            .mean()
-            .reset_index()
+            filtered_generation.groupby(["DateTime", "ID"]).mean().reset_index()
         )
     else:
         st.info("Select at least one generation unit to see the data.")
@@ -303,9 +291,9 @@ with tab2:
     if len(selected_units) > 0 and not filtered_generation.empty:
         # Create a new column with the formatted legend label
         filtered_generation["Unit_Label"] = (
-            filtered_generation["GenerationUnitCode"].map(generation_units_name)
+            filtered_generation["ID"].map(generation_units_name)
             + " ("
-            + filtered_generation["GenerationUnitCode"]
+            + filtered_generation["ID"]
             + ")"
         )
 
@@ -318,7 +306,7 @@ with tab2:
             labels={
                 "DateTime": "DateTime",
                 "Generation_MWh": "Daily generation (MWh)",
-                "GenerationUnitCode": "Generation Unit",
+                "ID": "Generation Unit",
             },
         )
 
@@ -343,8 +331,10 @@ with tab3:
     st.markdown(
         """
 
-This application allows you to explore generation units and their daily generation data from the [ENTSO-E Transparency Platform](https://transparency.entsoe.eu/).
-The data is uploaded daily from ENTSO-E using their API.
+This application allows you to explore generation units and their daily generation data from the [ENTSO-E Transparency Platform](https://transparency.entsoe.eu/) and [Elexon](https://bmrs.elexon.co.uk/).
+The data is uploaded daily from ENTSO-E and Elexon using their APIs.
+Elexon data is included to provide more detailed information on generation units in Great Britain, which are not fully covered in the ENTSO-E dataset.
+ENTSO-E data is generally available with a delay of around 1 day, while Elexon data is available with a delay of around 6 days.
 
 **Note:** We do not own this data.
 
