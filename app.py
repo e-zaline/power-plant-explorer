@@ -14,7 +14,6 @@ st.title("⚡ Power plant generation explorer")
 
 
 # Load data
-@st.cache_data
 def load_csv_data(folder, delimiter=",", dtypes=None, parse_dates=None, usecols=None):
     csv_files = glob.glob(os.path.join(folder, "*.csv"))
     if not csv_files:
@@ -34,7 +33,6 @@ def load_csv_data(folder, delimiter=",", dtypes=None, parse_dates=None, usecols=
     return pd.concat(dfs, ignore_index=True)
 
 
-@st.cache_data
 def load_parquet_data(folder):
     parquet_files = glob.glob(os.path.join(folder, "*.parquet"))
     if not parquet_files:
@@ -46,33 +44,47 @@ def load_parquet_data(folder):
     return pd.concat(dfs, ignore_index=True)
 
 
-# Load ENTSO-E units list
-df_units_entsoe = load_csv_data("data/unit list/entsoe")
-df_units_entsoe = format_entsoe_units(df_units_entsoe)
+# Unit list
+@st.cache_data
+def get_unit_list():
+    # ENTSO-E
+    df_units_entsoe = load_csv_data("data/unit list/entsoe")
+    df_units_entsoe = format_entsoe_units(df_units_entsoe)
+    # Elexon
+    df_units_elexon = load_csv_data("data/unit list/elexon")
+    df_units_elexon = format_elexon_units(df_units_elexon)
 
-# Load Elexon units list
-df_units_elexon = load_csv_data("data/unit list/elexon")
-df_units_elexon = format_elexon_units(df_units_elexon)
+    # Concatenate ENTSO-E and Elexon units
+    df_units = pd.concat([df_units_entsoe, df_units_elexon], ignore_index=True)
+    # Sort units by Area, Fuel, Fuel detailled, Generation Unit Name
+    df_units = df_units.sort_values(
+        by=["Area", "Fuel", "Fuel (detailled)", "Generation Unit Name"]
+    ).reset_index(drop=True)
+    return df_units
 
-# Concatenate ENTSO-E and Elexon units
-df_units = pd.concat([df_units_entsoe, df_units_elexon], ignore_index=True)
-# Sort units by Area, Fuel, Fuel detailled, Generation Unit Name
-df_units = df_units.sort_values(
-    by=["Area", "Fuel", "Fuel (detailled)", "Generation Unit Name"]
-).reset_index(drop=True)
 
-# Load ENTSO-E generation data
-df_generation_entsoe = load_parquet_data("data/generation/entsoe/")
-df_generation_entsoe = format_entsoe_generation(df_generation_entsoe)
+df_units = get_unit_list()
 
-# Load Elexon generation data
-df_generation_elexon = load_parquet_data("data/generation/elexon/")
-df_generation_elexon = format_elexon_generation(df_generation_elexon)
 
-# Concatenate ENTSO-E and Elexon generation data
-df_generation = pd.concat(
-    [df_generation_entsoe, df_generation_elexon], ignore_index=True
-)
+@st.cache_data
+def get_generation_data():
+    # ENTSO-E generation data
+    df_generation_entsoe = load_parquet_data("data/generation/entsoe/")
+    df_generation_entsoe = format_entsoe_generation(df_generation_entsoe)
+    # Elexon generation data
+    df_generation_elexon = load_parquet_data("data/generation/elexon/")
+    df_generation_elexon = format_elexon_generation(df_generation_elexon)
+    # Concatenate ENTSO-E and Elexon generation data
+    df_generation = pd.concat(
+        [df_generation_entsoe, df_generation_elexon], ignore_index=True
+    )
+    # df_generation = df_generation.head(100)
+    st.session_state["data_generation"] = df_generation
+    # return df_generation
+
+
+# df_generation = get_generation_data()
+get_generation_data()
 
 
 # Add a helper to reset filter widgets using session_state
@@ -217,9 +229,6 @@ with tab1:
         filtered_df_units["ID"].isin(st.session_state["selected_units"]),
     )
 
-    # Display dataframe
-    filtered_df_units = filtered_df_units.drop_duplicates().reset_index(drop=True)
-
     # Display current selection count
     if len(st.session_state["selected_units"]) == 0:
         select_message = "Select at least one unit to visualise its generation."
@@ -243,9 +252,9 @@ with tab1:
     # Download button
     csv = filtered_df_units.to_csv(index=False).encode("utf-8")
     st.download_button(
-        label="📥 Download filtered data as CSV",
+        label="📥 Download filtered units as CSV",
         data=csv,
-        file_name="filtered_generation_units.csv",
+        file_name="filtered_units.csv",
         mime="text/csv",
     )
 
@@ -261,70 +270,79 @@ with tab2:
             value=(datetime.now().year - 1, datetime.now().year),
         )
 
-    generation_units_name = (
-        df_units.drop_duplicates(subset="ID", keep="first")[
-            ["ID", "Generation Unit Name"]
-        ]
-        .set_index("ID")["Generation Unit Name"]
-        .to_dict()
-    )
-
-    filtered_generation = (
-        df_generation[["DateTime", "ID", "Generation_MWh"]].drop_duplicates().copy()
-    )
-
-    if len(selected_units) > 0:
-        filtered_generation = filtered_generation[
-            filtered_generation["ID"].isin(selected_units)
-        ]
-        filtered_generation = filtered_generation[
-            filtered_generation["DateTime"].between(
-                f"{filtered_years[0]}-01-01", f"{filtered_years[1]}-12-31"
-            )
-        ]
-        filtered_generation = (
-            filtered_generation.groupby(["DateTime", "ID"]).mean().reset_index()
-        )
-    else:
+    # CASE 1 : No unit selected
+    if len(selected_units) == 0:
         st.info("Select at least one generation unit to see the data.")
 
-    if len(selected_units) > 0 and not filtered_generation.empty:
-        # Create a new column with the formatted legend label
-        filtered_generation["Unit_Label"] = (
-            filtered_generation["ID"].map(generation_units_name)
-            + " ("
-            + filtered_generation["ID"]
-            + ")"
+    # CASE 2 : Units selected
+    else:
+        generation_units_name = (
+            df_units.drop_duplicates(subset="ID", keep="first")[
+                ["ID", "Generation Unit Name"]
+            ]
+            .set_index("ID")["Generation Unit Name"]
+            .to_dict()
         )
 
-        # Plot
-        fig = px.line(
-            filtered_generation,
-            x="DateTime",
-            y="Generation_MWh",
-            color="Unit_Label",
-            labels={
-                "DateTime": "DateTime",
-                "Generation_MWh": "Daily generation (MWh)",
-                "ID": "Generation Unit",
-            },
-        )
+        # Display chart if data is available, otherwise show warning
+        if (
+            "data_generation" in st.session_state
+            and st.session_state["data_generation"] is not None
+        ):
+            filtered_generation = st.session_state["data_generation"]
+            filtered_generation = filtered_generation[
+                filtered_generation["ID"].isin(selected_units)
+            ]
 
-        fig.update_layout(legend=dict(yanchor="top", y=-0.2, xanchor="left", x=0.01))
+            # Filter the selected range
+            filtered_generation = filtered_generation[
+                filtered_generation["DateTime"].between(
+                    f"{filtered_years[0]}-01-01", f"{filtered_years[1]}-12-31"
+                )
+            ]
 
-        st.plotly_chart(fig)
+            # Create a new column with the formatted legend label
+            filtered_generation["Unit_Label"] = (
+                filtered_generation["ID"].map(generation_units_name)
+                + " ("
+                + filtered_generation["ID"]
+                + ")"
+            )
 
-        # Download button
-        csv = filtered_generation.to_csv(index=False).encode("utf-8")
-        st.download_button(
-            label="📥 Download generation data as CSV",
-            data=csv,
-            file_name="generation_data.csv",
-            mime="text/csv",
-        )
+            # CASE 2.1 : No data after filtering
+            if len(filtered_generation) == 0:
+                st.warning(
+                    "No generation data available for the selected units and years. Change the year range or select different units to see the data."
+                )
+            # CASE 2.2 : Data available, display the chart
+            else:
+                # Plot
+                fig = px.line(
+                    filtered_generation,
+                    x="DateTime",
+                    y="Generation_MWh",
+                    color="Unit_Label",
+                    labels={
+                        "DateTime": "DateTime",
+                        "Generation_MWh": "Daily generation (MWh)",
+                        "ID": "Generation Unit",
+                    },
+                )
 
-    elif len(selected_units) > 0 and filtered_generation.empty:
-        st.warning("No generation data available for the selected units and years.")
+                fig.update_layout(
+                    legend=dict(yanchor="top", y=-0.2, xanchor="left", x=0.01)
+                )
+                st.plotly_chart(fig)
+
+                # Download button
+                csv = filtered_generation.to_csv(index=False).encode("utf-8")
+                st.download_button(
+                    label="📥 Download generation data as CSV",
+                    data=csv,
+                    file_name="generation_data.csv",
+                    mime="text/csv",
+                )
+
 
 with tab3:
     st.header("About this App")
@@ -342,7 +360,8 @@ Developed by **e-zaline** for **Beyond Fossil Fuels**.
 """
     )
 
-    last_update = (
-        df_generation["DateTime"].max() if df_generation is not None else "N/A"
-    )
+    try:
+        last_update = st.session_state["data_generation"]["DateTime"].max()
+    except (NameError, TypeError):
+        last_update = "N/A"
     st.markdown(f"**Data last updated:** {last_update}")

@@ -146,8 +146,20 @@ def format_elexon_units(df_units_elexon):
 
 def format_entsoe_generation(df_generation_entsoe):
     df_generation_entsoe["ID"] = df_generation_entsoe["GenerationUnitCode"]
+    df_generation_entsoe = df_generation_entsoe[
+        ["DateTime", "ID", "Generation_MWh"]
+    ].drop_duplicates()
+    df_generation_entsoe = (
+        df_generation_entsoe.groupby(["DateTime", "ID"]).mean().reset_index()
+    )  # We average the generation values if there are duplicates for the same DateTime and ID (it can happen when there are multiple production units for the same generation unit, we don't want to lose this information but we want to have only one value per day and per unit)
     return df_generation_entsoe
 
 
 def format_elexon_generation(df_generation_elexon):
+    df_generation_elexon = df_generation_elexon[
+        ["DateTime", "ID", "Generation_MWh"]
+    ].drop_duplicates()
+    df_generation_elexon = (
+        df_generation_elexon.groupby(["DateTime", "ID"]).mean().reset_index()
+    )
     return df_generation_elexon
