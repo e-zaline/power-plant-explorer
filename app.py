@@ -65,6 +65,8 @@ def get_unit_list():
 
 df_units = get_unit_list()
 
+# Load generation data once at app start
+
 
 @st.cache_data
 def get_generation_data():
@@ -79,12 +81,12 @@ def get_generation_data():
         [df_generation_entsoe, df_generation_elexon], ignore_index=True
     )
     # df_generation = df_generation.head(100)
-    st.session_state["data_generation"] = df_generation
-    # return df_generation
+    return df_generation
 
 
 # df_generation = get_generation_data()
-get_generation_data()
+df_generation = get_generation_data()
+st.session_state["data_generation"] = df_generation if not df_generation.empty else None
 
 
 # Add a helper to reset filter widgets using session_state
@@ -285,10 +287,7 @@ with tab2:
         )
 
         # Display chart if data is available, otherwise show warning
-        if (
-            "data_generation" in st.session_state
-            and st.session_state["data_generation"] is not None
-        ):
+        if st.session_state["data_generation"] is not None:
             filtered_generation = st.session_state["data_generation"]
             filtered_generation = filtered_generation[
                 filtered_generation["ID"].isin(selected_units)
@@ -361,7 +360,10 @@ Developed by **e-zaline** for **Beyond Fossil Fuels**.
     )
 
     try:
-        last_update = st.session_state["data_generation"]["DateTime"].max()
-    except (NameError, TypeError):
+        if st.session_state["data_generation"] is not None:
+            last_update = st.session_state["data_generation"]["DateTime"].max()
+        else:
+            last_update = "N/A"
+    except (NameError, TypeError, KeyError):
         last_update = "N/A"
     st.markdown(f"**Data last updated:** {last_update}")
