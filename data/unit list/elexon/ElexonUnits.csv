@@ -2077,7 +2077,7 @@ IVG-VTFS1,I_IVG-VTFS1,,,Vattenfall Energy Trading,I,True,VET_VIKING_G,VTS,0.000,
 IVG-WOLF1,I_IVG-WOLF1,,,Wolfram Trading ApS,I,True,WT Vlink Export BMU,WT74183,0.000,800.000,P,0.0086123,0.000,0.000,0.000,0.000,False,False,,,VIKINGLINK
 JAMBB-1,E_JAMBB-1,,OTHER,Tesla Motors Limited,E,True,Jamesfield 1 Battery Storage,TESLA,-30.000,30.000,P,-0.0247930,-12.000,-12.000,12.000,12.000,True,False,_P,North Scotland,
 JAMBB-2,E_JAMBB-2,,OTHER,Tesla Motors Limited,E,True,Jamesfield 2 Battery Storage,TESLA,-19.314,19.000,P,-0.0247930,-7.726,-7.726,7.600,7.600,True,False,_P,North Scotland,
-JGPR-1,T_JGPR-1,,BIOMASS,JG Pears Power Ltd,T,True,High Marnham JGPEARS,JGPEARSP,-11.469,13.000,P,0.0086123,-4.588,-4.588,5.200,5.200,True,False,,,
+JGPR-1,T_JGPR-1,,BIOMASS,JG Pears Power Ltd,T,True,High Marnham JGPEARS,JGPEARSP,-14.990,13.000,P,0.0086123,-5.996,-5.996,5.200,5.200,True,False,,,
 JJERE000,2__JJERE000,,,Shell Energy UK Limited,G,False,2__JJERE000,AMPERE,0.000,0.000,C,0.0231229,0.000,0.000,0.000,0.000,False,False,_J,South Eastern,
 KEAD-1,T_KEAD-1,48W000000KEAD-15,CCGT,Keadby Generation Limited,T,True,KGL CCGT 1,KGL,-11.000,764.000,P,-0.0019966,-4.400,-4.400,305.600,305.600,True,False,,,
 KEAD-2,T_KEAD-2,48W000000KEAD-23,CCGT,Keadby Generation Limited,T,True,Keadby-2 Main,KGL,-20.000,890.000,P,-0.0019966,-8.000,-8.000,356.000,356.000,True,False,,,
