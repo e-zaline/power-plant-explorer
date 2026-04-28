@@ -1788,6 +1788,10 @@ IMG-SPEM1,I_IMG-SPEM1,,,SP Energy Management Ltd,I,True,IMG-SPEM1,SPOWER02,0.000
 IMG-STAT1,I_IMG-STAT1,,,Statkraft Markets Gmbh,I,True,STATKRAFT MOYLE IMPORT,STATKRA1,0.000,1000.000,P,-0.0119196,0.000,0.000,0.000,0.000,False,False,,,MOYLE
 IMG-VESL1,I_IMG-VESL1,,,Energia Customer Solutions Ltd,I,True,VIREXP,VESL,0.000,0.000,P,-0.0119196,0.000,0.000,0.000,0.000,False,False,,,MOYLE
 INAW-1,,48W000000INAW-10,NPSHYD,,,,,,,,,,,,,,False,False,,,
+INCWO-1,,,WIND,,,,,,,,,,,,,,False,False,,,
+INCWO-2,,,WIND,,,,,,,,,,,,,,False,False,,,
+INCWO-3,,,WIND,,,,,,,,,,,,,,False,False,,,
+INCWO-4,,,WIND,,,,,,,,,,,,,,False,False,,,
 IND-ALIP1,I_IND-ALIP1,,,Energetick ApS,I,True,Flow from UK,ALPSNRG,-100.000,0.000,C,0.0085077,0.000,0.000,0.000,0.000,False,False,,,NEMOLINK
 IND-ALPE1,I_IND-ALPE1,,,Alpha Energy ApS,I,True,Nemolink Demand,ALPHAENE,-500.000,0.000,C,0.0085077,0.000,0.000,0.000,0.000,False,False,,,NEMOLINK
 IND-ARON1,I_IND-ARON1,,,J.Aron & Company,I,True,NEMO JAron GB - BE Flow,JARON,-1000.000,0.000,C,0.0085077,0.000,0.000,0.000,0.000,False,False,,,NEMOLINK
