@@ -2506,6 +2506,7 @@ PINFD-5,T_PINFD-5,,,Zenobe Capenhurst Limited,T,True,T_PINFD-5,ZENOBE2,-2.000,0.
 PINFD-6,T_PINFD-6,,,Zenobe Capenhurst Limited,T,True,T_PINFD-6,ZENOBE2,-2.000,0.000,C,0.0071527,-0.617,-0.617,0.000,0.000,False,False,,,
 PJERE000,2__PJERE000,,,Shell Energy UK Limited,G,False,2__PJERE000,AMPERE,0.000,0.000,C,-0.0417624,0.000,0.000,0.000,0.000,False,False,_P,NORTH of SCOTLAND GSP,
 PLYRK-1,E_PLYRK-1,,OTHER,Conrad Energy (Trading) Ltd,E,False,Plymouth Rock,CONRAD,-1.000,15.000,C,0.0181821,-0.072,-0.072,1.077,1.077,False,False,_L,South Western,
+PMBSC-61,T_PEMBSC-61,,,RWE Generation UK plc,T,True,Pembroke Synch Comp 61,INNOGY01,-3.000,2.000,C,0.0162928,-0.281,-0.281,0.187,0.187,False,False,,,
 PNYCB-1,T_PNYCB-1,,,Arenko Cleantech Limited,T,True,Pen y Cymoedd Battery,AG,-22.000,22.000,P,0.0162928,-8.800,-8.800,8.800,8.800,True,False,,,
 PNYCW-1,T_PNYCW-1,,WIND,Pen y Cymoedd Wind Farm LTD,T,True,PNYCW-1 Export,PYC,-17.160,228.000,P,0.0162928,-6.864,-6.864,91.200,91.200,True,False,,,
 POOBD-1,T_POOBD-1,,,EDF Energy Customers Limited,T,True,T_POOBD-1,LENCO,-8.000,0.000,C,-0.0119196,-4.146,-4.146,0.000,0.000,False,False,,,
