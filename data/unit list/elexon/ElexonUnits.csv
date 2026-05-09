@@ -234,7 +234,7 @@ AG-HEL0AG,V__GHABI002,,,Habitat Energy Limited,V,True,Gipsy Lane,HABITAT,0.000,0
 AG-HEL0BA,V__AHABI003,,,Habitat Energy Limited,V,True,Wickham,HABITAT,0.000,0.000,C,0.0037777,0.000,0.000,0.000,0.000,False,False,_A,Eastern GSP Group,
 AG-HEL0CP,V__PHABI004,,OTHER,Habitat Energy Limited,V,True,Fordtown,HABITAT,0.000,0.000,C,-0.0323359,0.000,0.000,0.000,0.000,False,False,_P,North Scotland,
 AG-HEL0DN,V__NHABI005,,OTHER,Habitat Energy Limited,V,True,Camilla,HABITAT,0.000,0.000,C,-0.0119196,0.000,0.000,0.000,0.000,False,False,_N,South Scotland,
-AG-HEL0EP,V__PHABI006,,OTHER,Habitat Energy Limited,V,True,Glendevon,HABITAT,0.000,0.000,C,-0.0472754,0.000,0.000,0.000,0.000,False,False,_P,NORTH of SCOTLAND GSP,
+AG-HEL0EP,V__PHABI006,,OTHER,Habitat Energy Limited,V,True,Glendevon,HABITAT,0.000,0.000,C,-0.0323359,0.000,0.000,0.000,0.000,False,False,_P,North Scotland,
 AG-HFLX01,2__HFLEX001,,,Flexitricity Limited,S,True,2__HFLEX001,FLEXTRCY,0.000,49.000,C,0.0160652,0.000,0.000,0.867,0.867,False,False,_H,Southern,
 AG-HFLX02,2__HFLEX002,48W000AG-HFLX02E,,Flexitricity Limited,S,True,2__HFLEX002,FLEXTRCY,0.000,49.000,C,0.0160652,0.000,0.000,13.191,13.191,False,False,_H,Southern,
 AG-HLIM01,2__HANGE001,,,Limejump Energy Limited,S,True,2__HANGE001,ANGEL,-20.791,50.000,C,0.0160652,-0.102,-0.091,0.245,0.220,False,False,_H,Southern,
