@@ -30,10 +30,8 @@ jobs:
         run: |
           ls -R ./data
 
-      - name: Sync data folder to Hugging Face bucket
+      - name: Sync ./data to Hugging Face bucket
         run: |
-          hf buckets sync ./data \
-            hf://buckets/e-zaline/power-plant-tracker/data \
-            --delete
-        env:
-          HUGGINGFACE_HUB_TOKEN: ${{ secrets.HF_TOKEN }}
+          uvx hf sync ./data \
+            hf://buckets/e-zaline/power-plant-tracker-storage \
+            --token $HF_TOKEN
