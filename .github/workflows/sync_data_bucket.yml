@@ -1,4 +1,4 @@
-name: Sync data folder to Hugging Face bucket
+name: Sync data folder to HF Bucket
 
 on:
   workflow_run:
@@ -15,31 +15,25 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Debug workspace
-        run: ls -R
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-
-      - name: Verify HF token exists
+      - name: Install HF CLI (with buckets support)
         run: |
-          if [ -z "$HF_TOKEN" ]; then
-            echo "HF_TOKEN is missing"
-            exit 1
-          fi
+          pip install -U "huggingface_hub[buckets]"
 
-      - name: Upload data folder to HF Space bucket
+      - name: Verify data folder exists
         run: |
-          uvx hf upload \
-            e-zaline/power-plant-tracker \
-            ./data \
-            /data \
-            --repo-type=space \
-            --token=$HF_TOKEN
+          ls -R ./data
+
+      - name: Sync data folder to Hugging Face bucket
+        run: |
+          hf buckets sync ./data \
+            hf://buckets/e-zaline/power-plant-tracker/data \
+            --delete
+        env:
+          HUGGINGFACE_HUB_TOKEN: ${{ secrets.HF_TOKEN }}
