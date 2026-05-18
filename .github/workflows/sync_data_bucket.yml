@@ -1,13 +1,18 @@
 name: Sync data folder to Hugging Face bucket
 
 on:
-  push:
-    paths:
-      - 'data/**'
+  workflow_run:
+    workflows: ["Update Data Daily"]
+    types:
+      - completed
+
   workflow_dispatch:
 
 jobs:
   sync-data:
+    # only run if upstream workflow succeeded
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
     runs-on: ubuntu-latest
 
     steps:
