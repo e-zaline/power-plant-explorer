@@ -1,4 +1,4 @@
-name: Sync data folder to HF Bucket
+name: Sync data to HF bucket
 
 on:
   workflow_run:
@@ -22,15 +22,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install HF CLI (with buckets support)
+      - name: Install uv (with uvx)
         run: |
-          pip install -U "huggingface_hub[buckets]"
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Verify data folder exists
-        run: |
-          ls -R ./data
-
-      - name: Sync ./data to Hugging Face bucket
+      - name: Sync data to HF bucket
         run: |
           uvx hf sync ./data \
             hf://buckets/e-zaline/power-plant-tracker-storage \
