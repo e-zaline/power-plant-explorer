@@ -13,7 +13,7 @@ st.set_page_config(page_title="Power plants explorer", page_icon="⚡", layout="
 st.title("⚡ Power plant generation explorer")
 
 # Load data
-data_folder = "hf://buckets/e-zaline/power-plant-tracker-storage/data/"
+data_folder = "hf://buckets/e-zaline/power-plant-tracker-storage/"
 
 
 def load_csv_data(folder, delimiter=",", dtypes=None, parse_dates=None, usecols=None):
