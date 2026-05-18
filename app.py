@@ -12,8 +12,10 @@ st.set_page_config(page_title="Power plants explorer", page_icon="⚡", layout="
 # Title
 st.title("⚡ Power plant generation explorer")
 
-
 # Load data
+data_folder = "hf://buckets/e-zaline/power-plant-tracker-storage/data/"
+
+
 def load_csv_data(folder, delimiter=",", dtypes=None, parse_dates=None, usecols=None):
     csv_files = glob.glob(os.path.join(folder, "*.csv"))
     if not csv_files:
@@ -48,10 +50,10 @@ def load_parquet_data(folder):
 @st.cache_data
 def get_unit_list():
     # ENTSO-E
-    df_units_entsoe = load_csv_data("data/unit list/entsoe")
+    df_units_entsoe = load_csv_data(data_folder + "unit list/entsoe")
     df_units_entsoe = format_entsoe_units(df_units_entsoe)
     # Elexon
-    df_units_elexon = load_csv_data("data/unit list/elexon")
+    df_units_elexon = load_csv_data(data_folder + "unit list/elexon")
     df_units_elexon = format_elexon_units(df_units_elexon)
 
     # Concatenate ENTSO-E and Elexon units
@@ -71,10 +73,10 @@ df_units = get_unit_list()
 @st.cache_data
 def get_generation_data():
     # ENTSO-E generation data
-    df_generation_entsoe = load_parquet_data("data/generation/entsoe/")
+    df_generation_entsoe = load_parquet_data(data_folder + "generation/entsoe/")
     df_generation_entsoe = format_entsoe_generation(df_generation_entsoe)
     # Elexon generation data
-    df_generation_elexon = load_parquet_data("data/generation/elexon/")
+    df_generation_elexon = load_parquet_data(data_folder + "generation/elexon/")
     df_generation_elexon = format_elexon_generation(df_generation_elexon)
     # Concatenate ENTSO-E and Elexon generation data
     df_generation = pd.concat(
@@ -345,8 +347,7 @@ with tab2:
 
 with tab3:
     st.header("About this App")
-    st.markdown(
-        """
+    st.markdown("""
 
 This application allows you to explore generation units and their daily generation data from the [ENTSO-E Transparency Platform](https://transparency.entsoe.eu/) and [Elexon](https://bmrs.elexon.co.uk/).
 The data is uploaded daily from ENTSO-E and Elexon using their APIs.
@@ -356,8 +357,7 @@ ENTSO-E data is generally available with a delay of around 1 day, while Elexon d
 **Note:** We do not own this data.
 
 Developed by **e-zaline** for **Beyond Fossil Fuels**.
-"""
-    )
+""")
 
     try:
         if st.session_state["data_generation"] is not None:
