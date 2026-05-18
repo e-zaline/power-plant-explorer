@@ -1,4 +1,4 @@
-name: Sync data to HF bucket
+name: Sync data to Hugging Face bucket
 
 on:
   workflow_run:
