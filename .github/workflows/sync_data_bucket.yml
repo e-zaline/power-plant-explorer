@@ -1,0 +1,29 @@
+name: Sync data folder to Hugging Face bucket
+
+on:
+  push:
+    paths:
+      - 'data/**'
+  workflow_dispatch:
+
+jobs:
+  sync-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Upload data folder to HF Space bucket
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          uvx hf upload \
+            e-zaline/power-plant-tracker \
+            ./data \
+            /data \
+            --repo-type=space \
+            --token=$HF_TOKEN

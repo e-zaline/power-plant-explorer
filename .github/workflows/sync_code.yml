@@ -1,0 +1,34 @@
+name: Sync code to Hugging Face Space
+
+on:
+  push:
+    paths-ignore:
+      - 'data/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Remove data folder before sync
+        run: rm -rf data
+
+      - name: Upload code to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          uvx hf upload \
+            e-zaline/power-plant-tracker \
+            . \
+            --repo-type=space \
+            --token=$HF_TOKEN
