@@ -522,6 +522,7 @@ COVNB-1,T_COVNB-1,,OTHER,Pivoted Power LLP,T,True,Pivot Power Coventry,PIVOT,-58
 COWB-1,T_COWB-1,,OTHER,Pivoted Power LLP,T,True,Cowley,PIVOT,-50.107,50.431,C,0.0160652,-20.043,-20.043,20.172,20.172,True,False,,,
 COWE1,E_COWE1,48W0000000COWE13,OCGT,RWE Generation UK plc,E,True,Cowes Main Unit 1,INNOGY01,-2.000,70.000,P,0.0160652,-0.800,-0.800,28.000,28.000,True,False,_H,Southern,
 COWE2,E_COWE2,48W0000000COWE21,OCGT,RWE Generation UK plc,E,True,Cowes Main Unit 2,INNOGY01,-2.000,70.000,P,0.0160652,-0.800,-0.800,28.000,28.000,True,False,_H,Southern,
+COYLB-1,T_COYLB-1,,,Statkraft Markets Gmbh,T,True,Coylton  Greener Grid  Park,STATKRA1,-50.000,50.000,C,-0.0012435,-20.000,-20.000,20.000,20.000,False,False,,,
 CRAGW-1,,,WIND,,,,,,,,,,,,,,False,False,,,
 CRDEW-1,T_CRDEW-1,,WIND,EDF Energy Customers Limited,T,True,Crossdykes WF-1,LENCO,-2.000,24.000,C,-0.0119196,-0.800,-0.800,9.600,9.600,True,False,,,
 CRDEW-2,T_CRDEW-2,,WIND,EDF Energy Customers Limited,T,True,Crossdykes WF-2,LENCO,-2.000,24.000,C,-0.0119196,-0.800,-0.800,9.600,9.600,True,False,,,
