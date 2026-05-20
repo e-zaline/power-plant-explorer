@@ -1996,6 +1996,7 @@ ING-XNON1,I_ING-XNON1,,,XENON CAPITAL MARKETS LTD,I,True,XENON-ING-P,XENON,0.000
 INGAD-1,T_INGAD-1,,,SSE Generation Ltd,T,False,Invergarry Station Demand,SSEGEN,-0.100,0.000,C,-0.0323359,-0.037,-0.037,0.000,0.000,False,False,,,
 INNDW-1,,,WIND,,,,,,,,,,,,,,False,False,,,
 INWID-1,T_INWID-1,,,EDF Energy Customers Limited,T,True,T_INWID-1,LENCO,-8.000,0.000,C,-0.0119196,-2.502,-2.502,0.000,0.000,False,False,,,
+IRNAB-1,,,OTHER,,,,,,,,,,,,,,False,False,,,
 ISD-DMCC1,I_ISD-DMCC1,,,Cobblestone Energy DMCC,I,True,Cobblestone Energy DMCC,OLDKENT,-1000.000,0.000,C,-0.0088231,0.000,0.000,0.000,0.000,False,False,,,NSL
 ISD-NDPL1,I_ISD-NDPL1,,,European Market Coupling,I,True,NDPL-NSL-C,NORDPOOL,-1480.000,0.000,C,-0.0088231,0.000,0.000,0.000,0.000,False,False,,,NSL
 ISG-DMCC1,I_ISG-DMCC1,,,Cobblestone Energy DMCC,I,True,Cobblestone Energy DMCC,OLDKENT,0.000,1000.000,P,-0.0088231,0.000,0.000,0.000,0.000,False,False,,,NSL
@@ -2750,7 +2751,7 @@ STLGW-1,T_STLGW-1,48W00000STLGW-1E,WIND,Stronelairg Windfarm Limited,T,True,Stro
 STLGW-2,T_STLGW-2,48W00000STLGW-2C,WIND,Stronelairg Windfarm Limited,T,True,Stronelairg Windfarm 2,STLG,-2.000,108.000,P,-0.0323359,-0.800,-0.800,43.200,43.200,True,False,,,
 STLGW-3,T_STLGW-3,48W00000STLGW-3A,WIND,Stronelairg Windfarm Limited,T,True,Stronelairg Windfarm 3,STLG,-3.316,108.000,P,-0.0323359,-1.326,-1.326,43.200,43.200,True,False,,,
 STPSW-1,,,WIND,,,,,,,,,,,,,,False,False,,,
-STRHW-1,,48X000000000433Q,WIND,,,,,,,,,,,,,,False,False,,,
+STRHW-1,E_STRHW-1,48X000000000433Q,WIND,ENGIE Power Limited,E,True,Strathrory Wind Farm,RWETDL,-0.500,36.000,C,-0.0323359,-0.200,-0.200,14.400,14.400,True,False,_P,North Scotland,
 STRNW-1,T_STRNW-1,48W00000STRNW-1H,WIND,Strathy Wind Farm Limited,T,True,Strathy North Wind Farm 1,STRTHWFL,-0.600,70.000,P,-0.0323359,-0.240,-0.240,28.000,28.000,True,False,,,
 SUDME-1,E_SUDME-1,,,Conrad Energy (Trading) Ltd,E,True,Sudmeadow,CONRAD,-1.100,40.000,C,0.0169223,-0.440,-0.440,16.000,16.000,True,False,_E,Midlands,
 SUNDB-1,T_SUNDB-1,,,Pivoted Power LLP,T,True,SUNDON BESS,PIVOT,-57.000,50.246,C,0.0048990,-22.800,-22.800,20.098,20.098,True,False,,,
