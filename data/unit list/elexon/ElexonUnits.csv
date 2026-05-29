@@ -852,7 +852,7 @@ HINB-7,T_HINB-7,48W000000HINB-77,NUCLEAR,EDF Energy Nuclear Generation,T,True,Hi
 HINB-8,T_HINB-8,48W000000HINB-85,NUCLEAR,EDF Energy Nuclear Generation,T,True,Hinkley Point B Generator 8,BEGL001,0.000,0.000,C,0.0181821,0.000,0.000,0.000,0.000,False,False,,,
 HINBD-1,T_HINB-D,,,EDF Energy Customers Limited,T,True,Hinkley Point B Station Demand,LENCO,-8.000,4.000,C,0.0181821,-6.706,-6.706,3.353,3.353,False,False,,,
 HIRWB-1,V__KHABI007,,,Habitat Energy Limited,V,True,Hirwaun,HABITAT,0.000,0.000,C,0.0162928,0.000,0.000,0.000,0.000,False,False,_K,South Wales,
-HIRWN-1,T_HIRWN-1,48W00000HIRWN-1P,OCGT,Hirwaun Power Limited,T,False,Hirwaun 1,HPL,-16.000,299.000,P,0.0162928,0.000,0.000,0.000,0.000,False,False,,,
+HIRWN-1,T_HIRWN-1,48W00000HIRWN-1P,OCGT,Hirwaun Power Limited,T,True,Hirwaun 1,HPL,-16.000,299.000,P,0.0162928,-6.400,-6.400,119.600,119.600,True,False,,,
 HJERE000,2__HJERE000,,,Shell Energy UK Limited,G,False,2__HJERE000,AMPERE,0.000,0.000,C,0.0265572,0.000,0.000,0.000,0.000,False,False,_H,Southern,
 HLGLW-1,E_HLGLW-1,48W00000HLGLW-1F,WIND,ENGIE Power Limited,E,True,Hill of Glaschyle,RWETDL,-0.400,28.000,C,-0.0323359,-0.160,-0.160,11.200,11.200,True,False,_P,North Scotland,
 HLLHG-1,V__GFORS004,48W00000HLLHG-1W,,Forsa Trading Limited,V,True,V__GFORS004,FORSA,0.000,20.000,P,0.0000456,0.000,0.000,4.600,4.600,True,False,_G,North Western,
