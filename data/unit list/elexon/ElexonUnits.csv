@@ -2574,7 +2574,7 @@ PINFB-4,T_PINFB-4,,OTHER,Zenobe Capenhurst Limited,T,True,T_PINFB-4,ZENOBE2,-26.
 PINFD-5,T_PINFD-5,,,Zenobe Capenhurst Limited,T,True,T_PINFD-5,ZENOBE2,-2.000,0.000,C,0.0014796,-0.916,-0.916,0.000,0.000,False,False,,,
 PINFD-6,T_PINFD-6,,,Zenobe Capenhurst Limited,T,True,T_PINFD-6,ZENOBE2,-2.000,0.000,C,0.0014796,-0.764,-0.764,0.000,0.000,False,False,,,
 PJERE000,2__PJERE000,,,Shell Energy UK Limited,G,False,2__PJERE000,AMPERE,0.000,0.000,C,-0.0417624,0.000,0.000,0.000,0.000,False,False,_P,NORTH of SCOTLAND GSP,
-PLOEW-1,,,WIND,,,,,,,,,,,,,,False,False,,,
+PLOEW-1,T_PLOEW-1,,WIND,PENCLOE WIND ENERGY LIMITED,T,True,PENCLOE WIND 1,PLOEW1,0.000,81.000,P,-0.0119196,0.000,0.000,32.400,32.400,True,False,,,
 PLYRK-1,E_PLYRK-1,,OTHER,Conrad Energy (Trading) Ltd,E,False,Plymouth Rock,CONRAD,-1.000,15.000,C,0.0173142,-0.076,-0.076,1.137,1.137,False,False,_L,South Western,
 PMBSC-61,T_PEMBSC-61,,,RWE Generation UK plc,T,True,Pembroke Synch Comp 61,INNOGY01,-2.400,0.000,C,0.0167661,-0.225,-0.225,0.000,0.000,False,False,,,
 PNYCB-1,T_PNYCB-1,,,Arenko Cleantech Limited,T,True,Pen y Cymoedd Battery,AG,-22.000,22.000,P,0.0167661,-8.800,-8.800,8.800,8.800,True,False,,,
