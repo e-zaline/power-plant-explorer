@@ -69,6 +69,7 @@ AG-BSTK99,2__BSTAT099,,,Statkraft Markets Gmbh,S,True,STAT_B99,STATKRA1,-8.000,8
 AG-BUKP01,2__BUKPR001,,,UK Power Reserve Limited,S,True,UKPR East Mids,UKPR,-10.000,10.359,C,0.0066681,-0.111,-0.109,0.115,0.113,False,False,_B,East Midlands,
 AG-BUKP02,2__BUKPR002,,,UK Power Reserve Limited,S,True,2__BUKPR002,UKPR,-1.000,20.000,C,0.0066681,-0.386,-0.368,7.716,7.358,False,False,_B,East Midlands,
 AG-BUKP03,2__BUKPR003,,,UK Power Reserve Limited,S,True,2__BUKPR003,UKPR,-1.000,20.000,C,0.0066681,-0.386,-0.368,7.716,7.358,False,False,_B,East Midlands,
+AG-BUKP04,2__BUKPR004,,,UK Power Reserve Limited,S,True,2__BUKPR004,UKPR,-1.000,20.000,C,0.0066681,-0.386,-0.368,7.716,7.358,False,False,_B,East Midlands,
 AG-CBS02L,V__LCEND001,,,Centrica Business Solutions UK,V,True,Wavehub,CENDEPUK,0.000,0.000,P,0.0173142,0.000,0.000,0.000,0.000,True,False,_L,South Western,
 AG-CBS05L,V__LCEND005,,,Centrica Business Solutions UK,V,True,V__LCEND005,CENDEPUK,0.000,0.000,P,0.0173142,0.000,0.000,0.000,0.000,True,False,_L,South Western,
 AG-CBS06B,V__BCEND004,,,Centrica Business Solutions UK,V,True,V__BCEND004,CENDEPUK,0.000,0.000,P,0.0066681,0.000,0.000,0.000,0.000,True,False,_B,East Midlands,
@@ -79,6 +80,7 @@ AG-COCT01,2__CMRCY002,48W000AG-COCT01L,,Octopus Energy Limited,S,True,AG-COCT01,
 AG-CPAD01,2__CPADD001,,,Fuse Energy Supply Limited,S,True,Padd_DSR,PADDINGT,-0.004,0.000,C,0.0175992,-0.002,-0.002,0.000,0.000,False,False,_C,London,
 AG-DEDF01,2__DLOND001,,,EDF Energy Customers Limited,S,True,EDFE Aggregate MANWEB01,LENCO,-2.000,24.000,C,0.0014796,-0.130,-0.073,1.558,0.876,False,False,_D,Merseyside North Wales,
 AG-DEDF02,2__DLOND002,,,EDF Energy Customers Limited,S,True,EDFE Aggregate MANWEB02,LENCO,-2.000,24.000,C,0.0014796,-0.022,-0.008,0.259,0.098,False,False,_D,Merseyside North Wales,
+AG-DEDF03,2__DLOND003,,,EDF Energy Customers Limited,S,True,EDFE Llay Gas Peaker,LENCO,0.000,3.000,C,0.0014796,0.000,0.000,0.660,0.660,False,False,_D,Merseyside North Wales,
 AG-DLIM01,2__DANGE001,,,Limejump Energy Limited,S,False,2__DANGE001,ANGEL,0.000,50.000,C,0.0014796,0.000,0.000,11.000,11.000,False,False,_D,Merseyside North Wales,
 AG-DOCT01,2__DMRCY001,48W000AG-DOCT01E,,Octopus Energy Limited,S,True,AG-DOCT01,MERCURY,-0.200,0.000,C,0.0014796,-0.076,-0.071,0.000,0.000,False,False,_D,Merseyside North Wales,
 AG-DSK01G,V__GDSKC001,48W000AG-DSK01GX,,Danske Commodities A/S,V,True,V__GDSKC001,DANSKE,0.000,0.000,C,-0.0044771,0.000,0.000,0.000,0.000,False,False,_G,North Western,
@@ -95,6 +97,10 @@ AG-DSTK07,2__DSTAT007,,,Statkraft Markets Gmbh,S,True,STAT_D8,STATKRA1,-2.000,30
 AG-DSTK99,2__DSTAT099,,,Statkraft Markets Gmbh,S,True,STAT_D99,STATKRA1,-2.000,4.000,C,0.0014796,-0.762,-0.714,1.524,1.427,False,False,_D,Merseyside North Wales,
 AG-DUKP01,2__DUKPR001,,,UK Power Reserve Limited,S,True,UKPR MANW,UKPR,-20.000,20.000,C,0.0014796,-0.172,-0.172,0.172,0.172,False,False,_D,Merseyside North Wales,
 AG-DUKP02,2__DUKPR002,,,UK Power Reserve Limited,S,True,2__DUKPR002,UKPR,-1.000,20.000,C,0.0014796,-0.381,-0.357,7.622,7.136,False,False,_D,Merseyside North Wales,
+AG-DUKP03,2__DUKPR003,,,UK Power Reserve Limited,S,True,2__DUKPR003,UKPR,-1.000,20.000,C,0.0014796,-0.381,-0.357,7.622,7.136,False,False,_D,Merseyside North Wales,
+AG-DUKP04,2__DUKPR004,,,UK Power Reserve Limited,S,True,2__DUKPR004,UKPR,-1.000,20.000,C,0.0014796,-0.381,-0.357,7.622,7.136,False,False,_D,Merseyside North Wales,
+AG-DUKP06,2__DUKPR006,,,UK Power Reserve Limited,S,True,2__DUKPR006,UKPR,-1.000,20.000,C,0.0014796,-0.381,-0.357,7.622,7.136,False,False,_D,Merseyside North Wales,
+AG-DUKP07,2__DUKPR007,,,UK Power Reserve Limited,S,True,2__DUKPR007,UKPR,-1.000,20.000,C,0.0014796,-0.381,-0.357,7.622,7.136,False,False,_D,Merseyside North Wales,
 AG-DUKP08,2__DUKPR008,,,UK Power Reserve Limited,S,True,2__DUKPR008,UKPR,-21.000,20.000,C,0.0014796,-8.003,-7.493,7.622,7.136,False,False,_D,Merseyside North Wales,
 AG-EDF01C,V__AFEEL002,,,EDF Energy Limited,V,True,V__AFEEL002,LONDELEC,-80.000,90.000,P,0.0043990,-18.400,-18.400,20.700,20.700,True,False,_A,Eastern,
 AG-EDF01P,V__PFEEL400,,,EDF Energy Limited,V,True,V__PFEEL400,LONDELEC,-100.000,110.000,P,-0.0200357,-23.000,-23.000,25.300,25.300,True,False,_P,North Scotland,
@@ -222,6 +228,7 @@ AG-GSTK14,2__GSTAT014,,,Statkraft Markets Gmbh,S,True,STAT_G15,STATKRA1,0.000,16
 AG-GSTK15,2__GSTAT015,,,Statkraft Markets Gmbh,S,True,STAT_G16,STATKRA1,0.000,16.000,C,-0.0044771,0.000,0.000,3.520,3.520,False,False,_G,North Western,
 AG-GSTK16,2__GSTAT016,,,Statkraft Markets Gmbh,S,True,STAT_G17,STATKRA1,-8.000,8.000,C,-0.0044771,-0.081,-0.078,0.081,0.078,False,False,_G,North Western,
 AG-GSTK17,2__GSTAT017,,,Statkraft Markets Gmbh,S,True,STAT_G18,STATKRA1,-2.000,30.735,C,-0.0044771,-0.510,-0.235,7.831,3.618,False,False,_G,North Western,
+AG-GSTK19,2__GSTAT019,,,Statkraft Markets Gmbh,S,True,STAT_G20,STATKRA1,-30.000,30.000,C,-0.0044771,-11.523,-10.896,11.523,10.896,False,False,_G,North Western,
 AG-GSTK99,2__GSTAT099,,,Statkraft Markets Gmbh,S,True,STAT_G99,STATKRA1,-6.000,6.000,C,-0.0044771,-2.305,-2.179,2.305,2.179,False,False,_G,North Western,
 AG-GUKP01,2__GUKPR001,,,UK Power Reserve Limited,S,True,UKPR NW,UKPR,-1.000,20.000,C,-0.0044771,-0.384,-0.363,7.682,7.264,False,False,_G,North Western,
 AG-GZP03K,V__KGAZP001,,,SEFE Marketing & Trading LTD,V,True,Rhymney,GAZPROM,0.000,0.000,C,0.0124353,0.000,0.000,0.000,0.000,False,False,_K,South Wales,
@@ -281,6 +288,7 @@ AG-JOCT01,2__JMRCY001,,,Octopus Energy Limited,S,True,AG-JOCT01,MERCURY,-1.400,0
 AG-JSTK01,2__JSTAT001,,,Statkraft Markets Gmbh,S,True,STAT_J2,STATKRA1,-2.000,22.000,C,0.0087752,-0.034,-0.041,0.378,0.455,False,False,_J,South Eastern,
 AG-JSTK02,2__JSTAT002,,,Statkraft Markets Gmbh,S,True,STAT_J3,STATKRA1,-8.000,6.305,C,0.0087752,-0.183,-0.156,0.144,0.123,False,False,_J,South Eastern,
 AG-JSTK03,2__JSTAT003,,,Statkraft Markets Gmbh,S,True,STAT_J4,STATKRA1,0.000,22.000,C,0.0087752,0.000,0.000,2.603,2.603,False,False,_J,South Eastern,
+AG-JSTK04,2__JSTAT004,,,Statkraft Markets Gmbh,S,True,STAT_J05,STATKRA1,-20.000,20.000,C,0.0087752,-8.624,-7.964,8.624,7.964,False,False,_J,South Eastern,
 AG-JSTK99,2__JSTAT099,,,Statkraft Markets Gmbh,S,True,STAT_J99,STATKRA1,-2.422,4.000,C,0.0087752,-1.044,-0.964,1.725,1.593,False,False,_J,South Eastern,
 AG-JUKP01,2__JUKPR001,,,UK Power Reserve Limited,S,True,UKPR S East,UKPR,-50.000,50.000,C,0.0087752,-0.830,-0.810,0.830,0.810,False,False,_J,South Eastern,
 AG-KFLX01,2__KFLEX001,,,Flexitricity Limited,S,True,2__KFLEX001,FLEXTRCY,0.000,49.000,C,0.0167661,0.000,0.000,7.179,7.179,False,False,_K,South Wales,
@@ -334,6 +342,7 @@ AG-MSTK04,2__MSTAT004,,,Statkraft Markets Gmbh,S,True,STAT_M5,STATKRA1,0.000,6.0
 AG-MSTK05,2__MSTAT005,,,Statkraft Markets Gmbh,S,True,STAT_M6,STATKRA1,-8.000,8.000,C,-0.0032986,-0.089,-0.082,0.089,0.082,False,False,_M,Yorkshire,
 AG-MSTK06,2__MSTAT006,,,Statkraft Markets Gmbh,S,True,STAT_M7,STATKRA1,0.000,16.000,C,-0.0032986,0.000,0.000,0.507,0.507,False,False,_M,Yorkshire,
 AG-MUKP01,2__MUKPR001,,,UK Power Reserve Limited,S,True,UKPR York,UKPR,0.000,0.000,C,-0.0032986,0.000,0.000,0.000,0.000,False,False,_M,Yorkshire,
+AG-MUKP02,2__MUKPR002,,,UK Power Reserve Limited,S,True,2__MUKPR002,UKPR,-1.400,24.000,C,-0.0032986,-0.545,-0.505,9.336,8.650,False,False,_M,Yorkshire,
 AG-NEDF01,2__NLOND001,,,EDF Energy Customers Limited,S,True,EDFE Aggregate S Scotland 01,LENCO,-2.000,30.000,C,-0.0066390,-0.100,-0.061,1.494,0.915,False,False,_N,South Scotland,
 AG-NEDF02,2__NLOND002,,,EDF Energy Customers Limited,S,True,EDFE Aggregate S Scot 2,LENCO,-2.000,20.000,C,-0.0066390,-0.062,-0.033,0.624,0.328,False,False,_N,South Scotland,
 AG-NEDF03,2__NLOND003,,,EDF Energy Customers Limited,S,True,EDFE Aggregate S Scot 3,LENCO,-2.000,20.000,C,-0.0066390,-0.076,-0.023,0.758,0.234,False,False,_N,South Scotland,
@@ -635,6 +644,7 @@ DWEXW-1,T_DWEXW-1,,WIND,Douglas West Extension Ltd,T,True,Douglas West Extension
 DYCEB-1,,,OTHER,,,,,,,,,,,,,,False,False,,,
 EAAO-1,T_EAAO-1,48W000000EAAO-1R,WIND,East Anglia One Limited,T,True,East Anglia One Offshore 1,EAOWIND,-6.600,358.000,P,0.0043990,-2.640,-2.640,143.200,143.200,True,False,,,
 EAAO-2,T_EAAO-2,48W000000EAAO-2P,WIND,East Anglia One Limited,T,True,East Anglia One Offshore 2,EAOWIND,-7.500,367.000,P,0.0043990,-3.000,-3.000,146.800,146.800,True,False,,,
+EACWO-1,T_EACWO-1,,,EAST ANGLIA THREE LIMITED,T,True,T_EACWO-1,EATHREE,0.000,0.000,C,0.0000000,0.000,0.000,0.000,0.000,False,False,,,
 EAD-BRTN1,I_EAD-BRTN1,,,NESO,I,True,BritNed ND Dem Account,NGC,-1000.000,0.000,C,0.0087752,0.000,0.000,0.000,0.000,False,False,,,BRITNED
 EAD-ELEC1,I_EAD-ELEC1,,,NESO,I,True,Eleclink NGC Dem Account,NGC,-1025.000,0.000,C,0.0087752,0.000,0.000,0.000,0.000,False,False,,,ELECLINK
 EAD-EWIC1,I_EAD-EWIC1,,,NESO,I,True,EWIC NG Dem Account,NGC,-710.000,0.000,C,0.0014796,0.000,0.000,0.000,0.000,False,False,,,EWIC
@@ -1950,7 +1960,7 @@ IND-VSAL1,I_IND-VSAL1,,,VITOL SA,I,True,I_IND-VSAL1,VITOLSA,-1000.000,0.000,C,0.
 IND-VTET1,I_IND-VTET1,,,Vattenfall Energy Trading,I,True,VET-NEMOLINK_D,VTS,-1000.000,0.000,C,0.0087752,0.000,0.000,0.000,0.000,False,False,,,NEMOLINK
 IND-XNON1,I_IND-XNON1,,,XENON CAPITAL MARKETS LTD,I,True,XENON-ING-C,XENON,-1000.000,0.000,C,0.0087752,0.000,0.000,0.000,0.000,False,False,,,NEMOLINK
 INDQ-1,T_INDQ-1,48W000000INDQ-19,OCGT,Indian Queens Power Ltd,T,True,Gas Turbine,AESIQPL,-5.000,140.080,P,0.0173142,-2.000,-2.000,56.032,56.032,True,False,,,
-INDQB-1,T_INDQB-1,,,Pivoted Power LLP,T,True,INDIAN QUEENS BESS,PIVOT,-47.500,47.500,C,0.0173142,-19.000,-19.000,19.000,19.000,True,False,,,
+INDQB-1,T_INDQB-1,,OTHER,Pivoted Power LLP,T,True,INDIAN QUEENS BESS,PIVOT,-47.500,47.500,C,0.0173142,-19.000,-19.000,19.000,19.000,True,False,,,
 ING-ALIP1,I_ING-ALIP1,,,Energetick ApS,I,True,Flow into UK,ALPSNRG,0.000,100.000,P,0.0087752,0.000,0.000,0.000,0.000,False,False,,,NEMOLINK
 ING-ALPE1,I_ING-ALPE1,,,Alpha Energy ApS,I,True,Nemolink Generation,ALPHAENE,0.000,500.000,P,0.0087752,0.000,0.000,0.000,0.000,False,False,,,NEMOLINK
 ING-ARON1,I_ING-ARON1,,,J.Aron & Company,I,True,NEMO JAron BE - GB Flow,JARON,0.000,1000.000,P,0.0087752,0.000,0.000,0.000,0.000,False,False,,,NEMOLINK
