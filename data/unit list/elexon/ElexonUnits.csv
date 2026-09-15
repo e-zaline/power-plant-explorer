@@ -599,6 +599,7 @@ DDGNO-3,T_DDGNO-3,48W00000DDGNO-3A,WIND,Dudgeon Offshore Wind Ltd,T,True,Dudgeon
 DDGNO-4,T_DDGNO-4,48W00000DDGNO-48,WIND,Dudgeon Offshore Wind Ltd,T,True,Dudgeon Generator BMU 4,DUDGEON,-1.400,102.000,P,0.0083094,-0.560,-0.560,40.800,40.800,True,False,,,
 DEAND-1,T_DEAND-1,,,SSE Generation Ltd,T,False,Deanie Station Demand,SSEGEN,-0.100,0.000,C,-0.0304534,-0.043,-0.043,0.000,0.000,False,False,,,
 DEEP-1,,48W000000DEEP-1N,CCGT,,,,,,,,,,,,,,False,False,,,
+DEPKG-1,T_DEPKG-1,,,Deeside Power (UK) Limited,T,True,Deeside Peakers,DEEPOWER,-1.700,49.900,P,0.0000000,0.000,0.000,0.000,0.000,True,False,,,
 DERBY-2,E_DERBY-1,,,Whitetower Energy Limited,E,True,DERBY,FDUN1,-6.000,56.084,P,0.0092272,-2.400,-2.400,22.434,22.434,True,False,_B,East Midlands,
 DERW-1,E_DERW-1,48W000000DERW-14,,UK Power Reserve Limited,E,True,Derwent Cogeneration Ltd,UKPR,-3.000,218.000,P,0.0066681,-1.200,-1.200,87.200,87.200,True,False,_B,East Midlands,
 DEUCW-1,,48W00000DEUCW-1K,WIND,,,,,,,,,,,,,,False,False,,,
