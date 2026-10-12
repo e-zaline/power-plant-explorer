@@ -20,7 +20,7 @@ client = EntsoeFileClient(username=username, pwd=password)
 file_list = client.list_folder("ProductionAndGenerationUnits_r3")
 
 df_units_entsoe = client.download_single_file(
-    folder="ProductionAndGenerationUnits_r3", filename=list(file_list.keys())[0]
+    folder="ProductionAndGenerationUnits_r3.1", filename=list(file_list.keys())[0]
 )
 # Create the directory if it doesn't exist
 os.makedirs("data/unit list", exist_ok=True)
