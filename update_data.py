@@ -17,16 +17,15 @@ client = EntsoeFileClient(username=username, pwd=password)
 # this returns a dict of {filename: unique_id}:
 
 # ----- Units
-file_list = client.list_folder("ProductionAndGenerationUnits_r3")
+entsoe_file = "ProductionAndGenerationUnits_r3.1"
+file_list = client.list_folder(entsoe_file)
 
 df_units_entsoe = client.download_single_file(
-    folder="ProductionAndGenerationUnits_r3.1", filename=list(file_list.keys())[0]
+    folder=entsoe_file, filename=list(file_list.keys())[0]
 )
 # Create the directory if it doesn't exist
 os.makedirs("data/unit list", exist_ok=True)
-df_units_entsoe.to_csv(
-    "data/unit list/entsoe/ProductionAndGenerationUnits_r3.csv", index=False
-)
+df_units_entsoe.to_csv("data/unit list/entsoe/EntsoeUnits.csv", index=False)
 
 # ----- Generation
 file_list = client.list_folder("ActualGenerationOutputPerGenerationUnit_16.1.A_r3")
