@@ -585,6 +585,7 @@ CULJD-1,T__HYELT002,,,EDF Energy Customers Limited,T,False,UKAEA Culham Jet,LENC
 CUMHW-1,T_CUMHW-1,,WIND,Uniper UK Limited,T,True,Cumberhead wind energy limited,EECL,-2.000,52.000,C,-0.0099306,-0.800,-0.800,20.800,20.800,True,False,,,
 CUMHW-2,T_CUMHW-2,48W00000CUMHW-2B,WIND,CUMBERHEAD WEST WIND FARM LTD,T,True,T_CUMHW-2,CHWW2024,-5.000,126.000,P,-0.0099306,-2.000,-2.000,50.400,50.400,True,False,,,
 CUPAB-1,E_CUPAB-1,,OTHER,Octopus Energy Trading Limited,E,True,Coupar Battery Storage,COPPER,-41.543,41.314,C,-0.0304534,-16.617,-16.617,16.526,16.526,True,False,_P,North Scotland,
+CUXTB-1,E_CUXTB-1,,,Cuxton Energy Storage Limited,E,True,Cuxton Energy Storage,CUX,-49.000,49.000,P,0.0130857,-4.586,-4.586,4.586,4.586,True,False,_J,South Eastern,
 CWMD-1,E_CWMD-1,,,RWE Generation UK plc,E,False,Cwm Dyli,INNOGY01,-1.000,9.900,P,0.0024587,-0.056,-0.056,0.553,0.553,False,False,_D,Merseyside North Wales,
 DALMB-1,E_DALMB-1,,OTHER,EDF Energy Customers Limited,E,True,Dalmarnock_BESS,LENCO,-40.000,40.000,C,-0.0099306,-3.744,-3.744,3.744,3.744,False,False,_N,South Scotland,
 DALQW-1,T_DALQW-1,,WIND,Statkraft Markets Gmbh,T,True,Dalquhandy  Wind Farm,STATKRA1,-0.500,42.846,P,-0.0099306,-0.200,-0.200,17.138,17.138,True,False,,,
